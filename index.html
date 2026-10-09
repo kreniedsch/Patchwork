@@ -306,9 +306,10 @@ function showVoid(until){
 }
 
 /* ---------- Öffnen ---------- */
+function pwWithBackup(h){const tag='<script src="backup.js?v=1"><\/script>';return /<\/body>/i.test(h)?h.replace(/<\/body>(?![\s\S]*<\/body>)/i,tag+'</body>'):h+tag;}
 function launch(html,music){
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const go=()=>{document.open();document.write(html);document.close();};
+ const go=()=>{html=pwWithBackup(html);document.open();document.write(html);document.close();};
  const wait=music?Math.max(1150,unlockTune()*1000+150):1150;
  if(reduce){setTimeout(go,music?wait:0);return;}
  [...grid.children].forEach((p,i)=>{const r=p.getBoundingClientRect();const d=document.createElement('div');d.className='fly';Object.assign(d.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',background:COLORS[i]==='core'?'var(--term)':'var('+COLORS[i]+')',boxShadow:'0 0 20px var(--glow)'});document.body.appendChild(d);p.style.visibility='hidden';const a=Math.atan2(r.top+r.height/2-innerHeight/2,r.left+r.width/2-innerWidth/2)+(i===4?Math.PI/2:0);const dist=Math.max(innerWidth,innerHeight);d.animate([{transform:'none',opacity:1},{transform:`translate(${Math.cos(a)*dist}px,${Math.sin(a)*dist}px) rotate(${(Math.random()-.5)*540}deg) scale(.4)`,opacity:0}],{duration:900,delay:(music?1280:200)+i*(music?35:90),easing:'cubic-bezier(.6,0,.4,1)',fill:'forwards'});});
