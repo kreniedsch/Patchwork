@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   if (window.__pwBackup) return; window.__pwBackup = true;
-  const SKIP = k => /^patchwork-lock/.test(k);
+  const SKIP = k => /^patchwork-lock/.test(k) || k === 'patchwork-gemini-key'; // Schlüssel und API-Key nie ins Backup
   const TS = 'patchwork-last-backup';
 
   /* ---------- Werte kodieren (Blobs, ArrayBuffer, Dates) ---------- */
