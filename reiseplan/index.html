@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Reiseplan Malaysia Thailand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: eine Spalte (max 560px). Timeline = Karten an einer Linie, Zeitlücken als Chips dazwischen. Feste Tab-Leiste unten. Nur helles Design. */
+  --bg:#FFF7EA; --card:#FFFFFF; --ink:#0E1A2B; --ink2:#44526A; --muted:#78859A; --line:#E0EAE7; --soft:#EAF5F2; --teal:#0C9E92;
+  --kl:#6B4DFF; --lgk:#00A39B; --hkt:#1D7BF0; --bkk:#F29A0B; --transit:#5B6B82;
+  --ok:#0F8F47; --okbg:#E0F5EA; --warn:#B96A00; --warnbg:#FFF0D1; --bad:#CF2A37; --badbg:#FCE3E5;
+  --display:'Bricolage Grotesque',system-ui,-apple-system,sans-serif;
+  --body:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{color-scheme:light;background:#FFF7EA;-webkit-text-size-adjust:100%}
+body{margin:0;background:#FFF7EA linear-gradient(180deg,#D3F1EC 0,#FFF7EA 480px) no-repeat;color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.4;
+  padding:env(safe-area-inset-top) 0 calc(88px + env(safe-area-inset-bottom)) 0;font-variant-numeric:tabular-nums}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding:16px}
+.view[hidden]{display:none}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+.ico{flex:none;display:block}
+
+/* Hero */
+.hero{background:var(--card);border-radius:26px;overflow:hidden;box-shadow:0 1px 0 var(--line),0 14px 36px rgba(12,158,146,.18)}
+.hero .hbg{background:linear-gradient(150deg,#0C9E92 0%,#2B7FF0 52%,#7B5CFF 100%);color:#fff}
+.hero .hin{padding:20px 18px 0;position:relative}
+.hero .low{background:#fff;margin-top:-2px;position:relative;padding:6px 18px 18px}
+.hero h1{font-size:32px;line-height:1.05;font-weight:800;letter-spacing:-.02em;color:#fff}
+.hero .dates{color:rgba(255,255,255,.92);margin-top:6px;font-weight:600}
+.art{line-height:0}
+.art svg{display:block;width:100%;height:auto}
+.hero .hbg .art{margin-top:8px;margin-bottom:-1px}
+.banner{border-radius:20px;overflow:hidden;line-height:0;margin-bottom:14px;box-shadow:0 8px 24px rgba(14,26,43,.1)}
+.banner svg{display:block;width:100%;height:auto}
+.b-add{background:linear-gradient(120deg,#FFC93C,#FF8A4C 55%,#FF5E8A)}
+.b-ov{background:linear-gradient(120deg,#12B5A6,#2B8CF0 60%,#7B5CFF)}
+@keyframes bobx{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.wx{margin-top:12px;background:rgba(255,255,255,.16);border-radius:14px;padding:11px 13px;color:#fff}
+.wx .wn{display:flex;align-items:baseline;gap:10px}.wx .wn strong{font-size:30px;line-height:1}.wx .wn span{font-weight:700}
+.wx .wr{font-size:13px;opacity:.95;margin-top:3px}
+.wx .wds{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.wx .wd{background:rgba(255,255,255,.2);border-radius:10px;padding:5px 8px;font-size:12px;font-weight:700;display:flex;flex-direction:column}
+.wx .wd i{font-style:normal;opacity:.85;font-weight:600}
+.wx small{display:block;margin-top:8px;opacity:.8;font-size:11.5px}
+.fs{margin-top:10px;border-radius:12px;padding:9px 12px;font-size:13.5px;background:var(--okbg);color:var(--ok)}
+.fs.warn{background:var(--warnbg);color:var(--warn)}.fs.bad{background:var(--badbg);color:var(--bad)}
+.fs span{display:block;font-weight:500;margin-top:2px}.fs small{display:block;margin-top:4px;opacity:.8;font-size:11.5px}
+.livebad{padding:6px 16px}
+@keyframes bobx2{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.trow{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--soft)}
+.trow:last-child{border-bottom:0}
+.trow .tb{flex:1;min-width:0}
+.trow .tt{font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.trow.done .tt{text-decoration:line-through;color:var(--muted)}
+.trow.done .cb{background:var(--ok);border-color:var(--ok)}
+.trow .tn{font-size:13px;color:var(--ink2);margin-top:2px}
+.trow .tm{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:7px}
+.stp{display:inline-block;border-radius:99px;padding:3px 9px;font-size:12px;font-weight:800;background:var(--soft);color:var(--ink2)}
+.stp.ok{background:var(--okbg);color:var(--ok)}.stp.warn{background:var(--warnbg);color:var(--warn)}.stp.bad{background:var(--badbg);color:var(--bad)}
+.lk{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:4px 11px;font-size:12.5px;font-weight:800;color:#fff;background:linear-gradient(135deg,#0C9E92,#5B3FE0);text-decoration:none}
+.tag.lkt{padding:0}
+.rem{padding:6px 16px}
+.nx{margin:12px 0 2px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.prh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rowt{border-bottom:1px solid var(--soft)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes cab{0%{transform:translate(0,0)}50%{transform:translate(130px,-32px)}100%{transform:translate(0,0)}}
+.cab{animation:cab 14s ease-in-out infinite}
+@keyframes rise{0%{transform:translateY(8px);opacity:.2}50%{opacity:1}100%{transform:translateY(-10px);opacity:.3}}
+.rise{animation:rise 5s ease-in-out infinite alternate}.rise.r2{animation-duration:6.5s;animation-delay:-2s}.rise.r3{animation-duration:4.2s;animation-delay:-1s}
+@keyframes boat{0%{transform:translateX(-14px)}100%{transform:translateX(14px)}}
+.boat{animation:boat 10s ease-in-out infinite alternate}
+@keyframes shim{0%,100%{opacity:.35}50%{opacity:.7}}
+.shim{animation:shim 3s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.cab,.rise,.boat,.shim{animation:none}}
+@keyframes drift{0%{transform:translateX(-8px)}100%{transform:translateX(8px)}}
+.bob{animation:bob 3.4s ease-in-out infinite}
+.drift{animation:drift 9s ease-in-out infinite alternate}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 12px;font-weight:700;font-size:13px;background:var(--ink);color:#fff;white-space:nowrap}
+.route{display:flex;gap:4px;margin:18px 0 8px}
+.route i{display:block;height:8px;border-radius:99px;background:var(--c)}
+.routelab{display:flex;gap:4px;font-size:12px;color:var(--ink2);font-weight:600}
+.routelab span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.stat{background:var(--soft);border-radius:14px;padding:10px 12px}
+.stat:nth-child(1){background:#FFF0C2}.stat:nth-child(2){background:#D8F5F1}.stat:nth-child(3){background:#FFE0EC}
+.stat b{display:block;font-family:var(--display);font-size:24px;font-weight:800;line-height:1}
+.stat span{font-size:12px;color:var(--ink2);font-weight:600}
+
+/* Hints */
+.sec{margin:22px 4px 10px;font-family:var(--display);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.sec .n{background:var(--teal);color:#fff;border-radius:99px;font-size:11px;padding:2px 8px;letter-spacing:0}
+.hint{background:var(--card);border-radius:16px;margin-bottom:8px;box-shadow:0 1px 0 var(--line);overflow:hidden}
+.hint summary{list-style:none;display:flex;gap:10px;align-items:center;padding:12px 14px;cursor:pointer;font-weight:600}
+.hint summary::-webkit-details-marker{display:none}
+.hint summary .ib{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;flex:none}
+.hint summary .t{flex:1;min-width:0}
+.hint summary .chev{color:var(--muted);transition:transform .15s}
+.hint[open] summary .chev{transform:rotate(180deg)}
+.hint .body{padding:0 14px 14px 54px;color:var(--ink2)}
+.k-warn .ib{background:var(--badbg);color:var(--bad)}
+.k-check .ib{background:var(--warnbg);color:var(--warn)}
+.k-info .ib{background:var(--soft);color:var(--ink2)}
+.k-event .ib{background:#EAE6FF;color:var(--kl)}
+
+/* Stream */
+.stream{margin-top:18px}
+.conn{position:relative;padding:0 0 0 22px;min-height:18px;display:flex;align-items:center}
+.conn::before{content:"";position:absolute;left:21px;top:0;bottom:0;border-left:2px dashed #C9D2E0}
+.conn .chip{position:relative;margin:8px 0 8px 22px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 13px 7px 11px;font-weight:600;font-size:13.5px;color:var(--ink2)}
+.chip b{color:var(--ink);font-weight:700}
+.chip.ok{background:var(--okbg);border-color:transparent;color:var(--ok)}.chip.ok b{color:var(--ok)}
+.chip.warn{background:var(--warnbg);border-color:transparent;color:var(--warn)}.chip.warn b{color:var(--warn)}
+.chip.bad{background:var(--badbg);border-color:transparent;color:var(--bad)}.chip.bad b{color:var(--bad)}
+.card{background:var(--card);border-radius:20px;box-shadow:0 1px 0 var(--line),0 8px 24px rgba(14,26,43,.05)}
+
+/* Flight */
+.fl{padding:16px}
+.fl .meta{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.02em;text-transform:uppercase}
+.fl .meta .d{color:var(--ink)}
+.fl .legs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:10px}
+.fl .time{font-family:var(--display);font-size:32px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.fl .ap{font-weight:700;margin-top:4px}
+.fl .cy{font-size:12.5px;color:var(--muted)}
+.fl .r{text-align:right}
+.fl .mid{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink2);font-size:12.5px;font-weight:600;min-width:84px}
+.fl .mid .ln{display:flex;align-items:center;gap:6px;width:100%}
+.fl .mid .ln::before,.fl .mid .ln::after{content:"";flex:1;border-top:2px solid var(--line)}
+.fl .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{background:var(--soft);border-radius:8px;padding:4px 9px;font-size:12.5px;font-weight:600;color:var(--ink2)}
+.tag.p{background:var(--ink);color:#fff}
+
+/* Segment */
+.seg{overflow:hidden}
+.seg .head{background:var(--g,var(--c));color:#fff;padding:18px 18px 0}
+.seg .head .cty{font-size:13px;font-weight:600;opacity:.9}
+.seg .head h2{font-size:32px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-top:2px}
+.seg .head .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.seg .head .np{background:rgba(255,255,255,.22);border-radius:999px;padding:5px 11px;font-weight:700;font-size:13px;white-space:nowrap}
+.seg .time-on-site{margin-top:14px;background:rgba(255,255,255,.16);border-radius:14px;padding:11px 13px}
+.seg .time-on-site small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.seg .time-on-site strong{display:block;font-family:var(--display);font-size:26px;font-weight:800;line-height:1.15;margin-top:2px}
+.seg .time-on-site span{font-size:13px;opacity:.95}
+.seg .head .art{margin:12px -18px 0}
+.cd{margin-top:16px;position:relative;z-index:1}
+.cdh{display:flex;justify-content:space-between;align-items:flex-end;gap:6px 12px;flex-wrap:wrap}
+.cdt{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.01em;line-height:1.1;text-shadow:0 2px 10px rgba(14,26,43,.25)}
+.cdp{font-size:12.5px;font-weight:700;opacity:.95}
+.cdg{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}
+.cu{text-align:center}
+.cu>span{display:block;margin-top:7px;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.95}
+.fc{--h:66px;position:relative;height:var(--h);perspective:380px;border-radius:12px;box-shadow:0 12px 22px rgba(14,26,43,.3)}
+.fc::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(10,20,40,.38);z-index:6}
+.fc .h{position:absolute;left:0;right:0;height:50%;overflow:hidden;color:#fff}
+.fc .h b{position:absolute;left:0;right:0;height:var(--h);line-height:var(--h);text-align:center;font-family:var(--display);font-size:40px;font-weight:800;letter-spacing:-.02em}
+.fc .up,.fc .fup{top:0;border-radius:12px 12px 0 0;background:linear-gradient(180deg,var(--a),var(--b));box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.fc .dn,.fc .fdn{bottom:0;border-radius:0 0 12px 12px;background:linear-gradient(180deg,var(--c),var(--d))}
+.fc .up b,.fc .fup b{top:0}.fc .dn b,.fc .fdn b{bottom:0}
+.fc .fup{transform-origin:50% 100%;backface-visibility:hidden;z-index:3}
+.fc .fdn{transform-origin:50% 0;transform:rotateX(90deg);backface-visibility:hidden;z-index:3}
+.fc .fup,.fc .fdn{visibility:hidden}
+.fc.go .fup,.fc.go .fdn{visibility:visible}
+.fc.go .fup{animation:fallTop .3s ease-in forwards}
+.fc.go .fdn{animation:fallBot .32s .3s ease-out forwards}
+@keyframes fallTop{to{transform:rotateX(-90deg)}}
+@keyframes fallBot{to{transform:rotateX(0)}}
+.fc.c0{--a:#FFB44D;--b:#F5772A;--c:#EC6A22;--d:#D94E1E}
+.fc.c1{--a:#3AD6C0;--b:#12A99A;--c:#0E9C8E;--d:#08776E}
+.fc.c2{--a:#9B82FF;--b:#6B4DFF;--c:#5F41F0;--d:#4529C2}
+.fc.c3{--a:#FF7FB0;--b:#F04E8C;--c:#E8447F;--d:#C92D68}
+.cdc{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.cdc span{background:rgba(255,255,255,.22);border-radius:99px;padding:6px 12px;font-weight:700;font-size:12.5px}
+.trk .bar{position:relative;height:8px;border-radius:99px;background:rgba(255,255,255,.28);margin-top:16px}
+.trk .bar i{display:block;height:100%;border-radius:99px;background:#fff}
+.trk .bar s{position:absolute;top:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:#FFC93C;color:#0E1A2B;display:grid;place-items:center;box-shadow:0 4px 10px rgba(14,26,43,.3)}
+.trk .bar s svg{transform:rotate(45deg)}
+.trl{display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px;font-weight:700}
+.sp{position:absolute;width:12px;height:12px;background:#fff;pointer-events:none;opacity:0;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:tw 2.6s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:.95;transform:scale(1) rotate(45deg)}}
+.cdm{font-family:var(--display);font-size:28px;font-weight:800;margin-top:4px}
+.seg .body{padding:14px 14px 6px}
+.stay{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-bottom:8px}
+.stay .ib{width:36px;height:36px;border-radius:12px;background:var(--cbg);color:var(--c);display:grid;place-items:center;flex:none}
+.stay .t{flex:1;min-width:0}
+.stay .t b{display:block;font-weight:700;line-height:1.25}
+.stay .t span{font-size:13px;color:var(--ink2)}
+.stay .pr{text-align:right;font-size:13px;font-weight:700;white-space:nowrap}
+.st{display:inline-block;border-radius:99px;padding:2px 8px;font-size:11.5px;font-weight:700}
+.st.ok{background:var(--okbg);color:var(--ok)}.st.x{background:var(--badbg);color:var(--bad)}
+.day{margin-top:14px;padding-bottom:4px}
+.dh{display:flex;align-items:center;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.dh b{font-family:var(--display);font-size:16px;font-weight:700}
+.dh span{color:var(--muted);font-size:12.5px;font-weight:600;flex:1}
+.mini{width:30px;height:30px;border-radius:10px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--ink2)}
+.rowi{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--soft)}
+.rowi .ib{width:30px;height:30px;border-radius:10px;background:var(--cbg);color:var(--c);display:grid;place-items:center;flex:none}
+.rowi.anchor .ib{background:var(--soft);color:var(--ink2)}
+.rowi .rb{flex:1;min-width:0}
+.rowi .rt{font-weight:600;overflow-wrap:anywhere}
+.rowi .rm{font-size:13px;color:var(--ink2);overflow-wrap:anywhere}
+.rowi.anchor .rt{font-weight:600;color:var(--ink2)}
+.rowi.dead .rt{text-decoration:line-through;color:var(--muted)}
+.rowi a{color:var(--c);font-weight:600}
+.rowi .go{width:30px;height:30px;border-radius:10px;border:0;background:transparent;color:var(--muted);display:grid;place-items:center}
+.gap{display:flex;align-items:center;gap:7px;margin:2px 0 2px 41px;padding:5px 0;font-size:13px;font-weight:700;color:var(--ink2)}
+.gap.ok{color:var(--ok)}.gap.warn{color:var(--warn)}.gap.bad{color:var(--bad)}
+.free{width:100%;text-align:left;background:transparent;border:1px dashed #CBD4E2;border-radius:12px;padding:9px 12px;margin-top:8px;color:var(--muted);font-weight:600;font-size:13.5px}
+.mini-card{padding:14px 16px}
+.mini-card h3{font-size:17px;margin-bottom:2px}
+
+/* Tab bar */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:8px 14px calc(8px + env(safe-area-inset-bottom));background:rgba(242,244,248,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.tabs .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--card);border-radius:20px;padding:5px;box-shadow:0 6px 24px rgba(14,26,43,.1)}
+.tabs button{border:0;background:transparent;border-radius:15px;padding:9px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-weight:700;color:var(--muted)}
+.tabs button[aria-current="page"]{background:linear-gradient(135deg,#0C9E92,#5B3FE0);color:#fff}
+
+/* Forms */
+.panel{background:var(--card);border-radius:20px;padding:16px;box-shadow:0 1px 0 var(--line),0 8px 24px rgba(14,26,43,.05);margin-bottom:14px}
+.panel h2{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:4px}
+.panel p.sub{margin:0 0 14px;color:var(--ink2)}
+label.f{display:block;font-size:12.5px;font-weight:700;color:var(--ink2);margin:12px 0 5px}
+.in-c{width:100%;border:1.5px solid var(--line);background:#FAFBFD;border-radius:12px;padding:11px 12px;font-size:16px;min-height:46px}
+textarea.in-c{min-height:74px;resize:vertical}
+.in-c:focus{outline:none;border-color:var(--ink);background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.types{display:flex;flex-wrap:wrap;gap:8px}
+.types label{cursor:pointer}
+.types input{position:absolute;opacity:0;pointer-events:none}
+.types span{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:999px;border:1.5px solid var(--line);font-weight:700;font-size:14px;color:var(--ink2);background:#fff}
+.types input:checked+span{background:var(--teal);border-color:var(--teal);color:#fff}
+.types input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
+.pv{margin-top:12px;background:var(--soft);border-radius:12px;padding:10px 12px;font-size:13.5px;color:var(--ink2);font-weight:600;min-height:40px}
+.pv.warn{background:var(--warnbg);color:var(--warn)}
+.btn{border:0;border-radius:14px;padding:13px 18px;font-weight:700;font-size:16px;background:linear-gradient(135deg,#0C9E92,#5B3FE0);color:#fff;min-height:48px}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn.danger{background:var(--bad)}
+.btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btns .btn{flex:1}
+.msg{margin-top:10px;font-weight:600;font-size:14px;color:var(--bad);min-height:0}
+.ideas{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.idea{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.item{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--soft)}
+.item:last-child{border-bottom:0}
+.item .ib{width:34px;height:34px;border-radius:11px;background:var(--cbg);color:var(--c);display:grid;place-items:center;flex:none}
+.item .rb{flex:1;min-width:0}
+.item .rt{font-weight:700;overflow-wrap:anywhere}
+.item .rm{font-size:13px;color:var(--ink2)}
+.item .acts{display:flex;gap:4px}
+.empty{color:var(--muted);padding:8px 0 4px;font-weight:500}
+
+/* Overview */
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--soft)}
+.kv:last-child{border-bottom:0}
+.kv span{color:var(--ink2)}
+.kv b{font-weight:700;white-space:nowrap}
+.big{font-family:var(--display);font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.todo{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--soft)}
+.todo:last-child{border-bottom:0}
+.cb{width:26px;height:26px;border-radius:8px;border:2px solid #B9C4D6;background:#fff;display:grid;place-items:center;color:#fff;flex:none;padding:0}
+.todo.done .cb{background:var(--ok);border-color:var(--ok)}
+.todo.done .tx{color:var(--muted);text-decoration:line-through}
+.todo .tx{flex:1;min-width:0;text-align:left;background:none;border:0;padding:4px 0;font-weight:500}
+.todo .tx small{display:block;color:var(--muted);font-size:12.5px;text-decoration:none}
+.tzrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--soft)}
+.tzrow:last-child{border-bottom:0}
+.tzrow i{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.tzrow span{flex:1}
+.mono{width:100%;min-height:110px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;border:1.5px solid var(--line);background:#FAFBFD;border-radius:12px;padding:10px;color:var(--ink2)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:10px 16px;font-weight:700;z-index:30;box-shadow:0 8px 24px rgba(14,26,43,.25);max-width:90%}
+.toast[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:380px){.fl .time{font-size:27px}.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<g id="palm"><path d="M0 0 C4 -22 10 -44 16 -64" stroke="#8A5A33" stroke-width="5" fill="none" stroke-linecap="round"/>
+<g transform="translate(16 -64)"><path d="M0 0 C-14 -14 -34 -12 -46 2 C-30 -4 -14 -4 0 0Z" fill="#1E9E5A"/><path d="M0 0 C14 -16 34 -14 48 0 C30 -6 14 -6 0 0Z" fill="#1E9E5A"/><path d="M0 0 C-10 -22 -26 -30 -42 -26 C-26 -22 -12 -14 0 0Z" fill="#2BBF73"/><path d="M0 0 C10 -24 26 -32 42 -28 C26 -22 12 -14 0 0Z" fill="#2BBF73"/><path d="M0 0 C-4 -26 -2 -38 6 -46 C6 -30 4 -14 0 0Z" fill="#19884D"/><circle cx="-3" cy="5" r="3.2" fill="#6B4423"/><circle cx="3" cy="5.5" r="3.2" fill="#6B4423"/></g></g>
+<linearGradient id="gM1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5FE0B5"/><stop offset=".55" stop-color="#1FA98A"/><stop offset="1" stop-color="#0B6E64"/></linearGradient>
+<linearGradient id="gM2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8CEBCB"/><stop offset="1" stop-color="#2BB596"/></linearGradient>
+<linearGradient id="gSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4AD0EE"/><stop offset="1" stop-color="#0A7FB5"/></linearGradient>
+<linearGradient id="gCab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8CA0"/><stop offset="1" stop-color="#E02653"/></linearGradient>
+<linearGradient id="gRiv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0508A"/><stop offset="1" stop-color="#7A1E6E"/></linearGradient>
+<linearGradient id="gSk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8F5BE8"/><stop offset="1" stop-color="#4A2BA8"/></linearGradient>
+<linearGradient id="gSk2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B33B8"/><stop offset="1" stop-color="#2D1670"/></linearGradient>
+<linearGradient id="gPr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF1C2"/><stop offset=".5" stop-color="#FFC94D"/><stop offset="1" stop-color="#C77A1A"/></linearGradient>
+<radialGradient id="gGlow"><stop offset="0" stop-color="#FFE27A" stop-opacity=".9"/><stop offset="1" stop-color="#FFE27A" stop-opacity="0"/></radialGradient>
+<filter id="fBlur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter>
+<g id="cloud" fill="#fff"><ellipse cx="0" cy="0" rx="26" ry="9"/><ellipse cx="-14" cy="-6" rx="14" ry="9"/><ellipse cx="10" cy="-9" rx="16" ry="11"/></g>
+<g id="bird"><path d="M0 0 q5 -6 10 0 q5 -6 10 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></g>
+</defs></svg>
+<main class="wrap">
+  <section id="v-timeline" class="view" aria-label="Timeline"><div id="tl"></div></section>
+
+  <section id="v-add" class="view" aria-label="Hinzufügen" hidden>
+    <div class="banner b-add" id="banAdd"></div>
+    <div class="panel">
+      <h2 id="formTitle">Neuer Eintrag</h2>
+      <p class="sub">Aktivitäten, Restaurants, Fahrten oder Notizen. Alles erscheint automatisch am richtigen Tag in der Timeline, inklusive der Zeit bis zum nächsten Flug.</p>
+      <form id="form" autocomplete="off" novalidate>
+        <label class="f">Art</label>
+        <div class="types" id="types"></div>
+
+        <label class="f" for="fTitle">Titel</label>
+        <input class="in-c" id="fTitle" type="text" placeholder="z. B. Petronas Towers" maxlength="120">
+
+        <div class="two">
+          <div><label class="f" for="fDate">Tag</label><select class="in-c" id="fDate"></select></div>
+          <div><label class="f" for="fCity">Stadt</label><select class="in-c" id="fCity"></select></div>
+        </div>
+        <div class="two">
+          <div><label class="f" for="fStart">Von (optional)</label><input class="in-c" id="fStart" type="time"></div>
+          <div><label class="f" for="fEnd">Bis (optional)</label><input class="in-c" id="fEnd" type="time"></div>
+        </div>
+        <div class="pv" id="pv" aria-live="polite"></div>
+
+        <label class="f" for="fPlace">Ort oder Adresse (optional)</label>
+        <input class="in-c" id="fPlace" type="text" placeholder="Name oder Adresse, öffnet Google Maps" maxlength="160">
+
+        <div class="two">
+          <div><label class="f" for="fCost">Kosten in CHF (optional)</label><input class="in-c" id="fCost" type="text" inputmode="decimal" placeholder="0.00"></div>
+          <div></div>
+        </div>
+        <label class="f" for="fNote">Notiz (optional)</label>
+        <textarea class="in-c" id="fNote" placeholder="Buchungsnummer, Treffpunkt, Tipps" maxlength="600"></textarea>
+
+        <div class="msg" id="formMsg" role="alert"></div>
+        <div class="btns">
+          <button type="submit" class="btn" id="fSave">Speichern</button>
+          <button type="button" class="btn ghost" id="fCancel" hidden>Abbrechen</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h2 style="font-size:19px">Ideen für <span id="ideaCity"></span></h2>
+      <p class="sub" style="margin-bottom:10px">Tippen übernimmt den Vorschlag ins Formular.</p>
+      <div class="ideas" id="ideas"></div>
+    </div>
+
+    <div class="panel">
+      <h2 style="font-size:19px">Deine Einträge</h2>
+      <div id="addList"></div>
+    </div>
+  </section>
+
+  <section id="v-overview" class="view" aria-label="Übersicht" hidden>
+    <div class="banner b-ov" id="banOv"></div>
+    <div class="panel"><h2>Kosten</h2><p class="sub">Gebuchte Hotels und Flüge plus deine eigenen Einträge.</p><div id="ovCosts"></div></div>
+    <div class="panel"><h2>Zeitzonen</h2><p class="sub">Ortszeit im Vergleich zu Zürich.</p><div id="ovTz"></div></div>
+    <div class="panel">
+      <h2>Checkliste</h2><p class="sub">Mit Fälligkeit und Links. Tippen zum Abhaken.</p>
+      <div id="ovTodos"></div>
+      <form id="todoForm" class="btns" style="margin-top:12px;flex-wrap:nowrap" autocomplete="off">
+        <input class="in-c" id="todoIn" type="text" placeholder="Neuer Punkt" maxlength="100" aria-label="Neuer Punkt für die Checkliste">
+        <button class="btn" type="submit" style="flex:none;padding:0 16px" aria-label="Punkt hinzufügen">Neu</button>
+      </form>
+    </div>
+    <div class="panel" id="livePanel">
+      <h2>Live-Daten</h2>
+      <p class="sub" id="liveInfo">Wetter wird beim Öffnen und alle 10 Minuten direkt abgerufen (Open-Meteo).</p>
+      <div class="btns"><button class="btn" id="liveNow" type="button">Jetzt aktualisieren</button></div>
+      <label class="f" for="fkey">Flugstatus (optional): API-Schlüssel von AeroDataBox (RapidAPI)</label>
+      <input id="fkey" type="password" autocomplete="off" placeholder="Schlüssel einfügen, bleibt nur auf diesem Gerät">
+      <div class="btns"><button class="btn" id="fkeySave" type="button">Schlüssel speichern und Flüge prüfen</button></div>
+      <p class="sub" id="fkeyInfo"></p>
+    </div>
+    <div class="panel">
+      <h2>Backup</h2>
+      <p class="sub" id="syncInfo"></p>
+      <label class="f" for="exp">Export (deine Einträge und Checkliste)</label>
+      <textarea class="mono" id="exp" readonly></textarea>
+      <div class="btns"><button class="btn" id="expCopy" type="button">Export kopieren</button></div>
+      <label class="f" for="imp" style="margin-top:18px">Import</label>
+      <textarea class="mono" id="imp" placeholder="Export hier einfügen"></textarea>
+      <div class="msg" id="impMsg" role="alert"></div>
+      <div class="btns"><button class="btn ghost" id="impGo" type="button">Import laden</button></div>
+      <div class="btns" style="margin-top:8px"><button class="btn ghost" id="resetBtn" type="button">Eigene Einträge zurücksetzen</button></div>
+    </div>
+  </section>
+</main>
+
+<nav class="tabs" aria-label="Bereiche"><div class="in">
+  <button type="button" data-tab="timeline" id="tab-timeline"></button>
+  <button type="button" data-tab="add" id="tab-add"></button>
+  <button type="button" data-tab="overview" id="tab-overview"></button>
+</div></nav>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s);};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+
+/* ---------- Icons ---------- */
+var IC={
+ plane:'<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.2.4c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.4-.2c.4-.3.6-.7.5-1.2z"/>',
+ bed:'<path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/>',
+ car:'<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
+ compass:'<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/>',
+ food:'<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>',
+ note:'<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
+ bag:'<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/>',
+ clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+ pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+ grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ trash:'<path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>',
+ alert:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/>',
+ info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+ edit:'<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+ chev:'<path d="m6 9 6 6 6-6"/>',
+ x:'<path d="M18 6 6 18M6 6l12 12"/>'
+};
+function ico(n,s){s=s||18;return '<svg class="ico" width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(IC[n]||'')+'</svg>';}
+
+/* ---------- Datum und Zeit ---------- */
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MON=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+function dObj(d){return new Date(d+'T12:00:00Z');}
+function dLabel(d){var x=dObj(d);return WD[x.getUTCDay()]+' '+x.getUTCDate()+'. '+MON[x.getUTCMonth()];}
+function dShort(d){var x=dObj(d);return x.getUTCDate()+'. '+MON[x.getUTCMonth()];}
+function addDays(d,n){var x=dObj(d);x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10);}
+function range(a,b){var r=[],d=a;while(d<=b&&r.length<40){r.push(d);d=addDays(d,1);}return r;}
+function nightsBetween(a,b){return Math.round((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/864e5);}
+function inst(d,t,off){return Date.parse(d+'T'+t+':00'+off);}
+function dur(ms){
+  var m=Math.abs(Math.round(ms/60000)),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mi=m%60,p=[];
+  if(d)p.push(d+(d===1?' Tag':' Tage'));
+  if(h||(d&&mi))p.push(h+' Std');
+  if(mi)p.push(mi+' Min');
+  if(!p.length)p.push('0 Min');
+  return p.join(' ');
+}
+function chf(n){return 'CHF '+Number(n).toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function uid(){return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+var H=36e5;
+var FIRST='2026-11-13',LAST='2026-11-27';
+
+/* ---------- Reisedaten ---------- */
+var CITY={
+ zrh:{n:'Zürich',tz:'+01:00',c:'#5B6B82'},
+ doh:{n:'Doha',tz:'+03:00',c:'#5B6B82'},
+ kl:{n:'Kuala Lumpur',tz:'+08:00',c:'#6B4DFF'},
+ lgk:{n:'Langkawi',tz:'+08:00',c:'#00A39B'},
+ hkt:{n:'Phuket',tz:'+07:00',c:'#1D7BF0'},
+ bkk:{n:'Bangkok',tz:'+07:00',c:'#F29A0B'}
+};
+var APC={ZRH:'Zürich',DOH:'Doha',KUL:'Kuala Lumpur',LGK:'Langkawi',HKT:'Phuket',BKK:'Bangkok'};
+var F=[
+ {id:'f1',no:'QR96',from:'ZRH',to:'DOH',air:'Qatar Airways',lk:['Gepäckregeln','https://www.qatarairways.com/en/baggage.html'],d:'2026-11-13',dt:'15:10',dz:'+01:00',a:'2026-11-13',at:'22:50',az:'+03:00',stops:0,bag:'25 kg Aufgabegepäck',cls:'Economy'},
+ {id:'f2',no:'QR4991',from:'DOH',to:'KUL',air:'Qatar Airways',lk:['Gepäckregeln','https://www.qatarairways.com/en/baggage.html'],op:'Malaysia Airlines',d:'2026-11-14',dt:'01:30',dz:'+03:00',a:'2026-11-14',at:'14:05',az:'+08:00',stops:0,bag:'25 kg Aufgabegepäck',cls:'Economy',extra:'Terminal 1'},
+ {id:'f3',no:'',from:'KUL',to:'LGK',air:'Malaysia Airlines',d:'2026-11-17',dt:'13:00',dz:'+08:00',a:'2026-11-17',at:'14:05',az:'+08:00',stops:0,price:129,bag:'20 kg Aufgabegepäck',hand:'7 kg Handgepäck + Rucksack',lk:['Malaysia Airlines','https://www.malaysiaairlines.com']},
+ {id:'f4',no:'',from:'LGK',to:'HKT',air:'Malaysia Airlines',d:'2026-11-20',dt:'14:45',dz:'+08:00',a:'2026-11-20',at:'17:35',az:'+07:00',stops:1,price:561.77,bag:'20 kg Aufgabegepäck',hand:'7 kg Handgepäck + Rucksack',lk:['Malaysia Airlines','https://www.malaysiaairlines.com']},
+ {id:'f5',no:'',from:'HKT',to:'BKK',air:'Bangkok Airways',d:'2026-11-23',dt:'15:00',dz:'+07:00',a:'2026-11-23',at:'16:35',az:'+07:00',stops:0,price:267.69,bag:'Gepäck prüfen',lk:['Bangkok Airways','https://www.bangkokair.com']},
+ {id:'f6',no:'QR837',from:'BKK',to:'DOH',air:'Qatar Airways',lk:['Gepäckregeln','https://www.qatarairways.com/en/baggage.html'],d:'2026-11-27',dt:'02:00',dz:'+07:00',a:'2026-11-27',at:'04:55',az:'+03:00',stops:0,bag:'25 kg Aufgabegepäck',cls:'Economy'},
+ {id:'f7',no:'QR95',from:'DOH',to:'ZRH',air:'Qatar Airways',lk:['Gepäckregeln','https://www.qatarairways.com/en/baggage.html'],d:'2026-11-27',dt:'09:30',dz:'+03:00',a:'2026-11-27',at:'13:40',az:'+01:00',stops:0,bag:'25 kg Aufgabegepäck',cls:'Economy'}
+];
+F.forEach(function(f){f.depT=inst(f.d,f.dt,f.dz);f.arrT=inst(f.a,f.at,f.az);});
+var STAYS={
+ s1:{id:'s1',name:'Santa Grand Signature Kuala Lumpur',ci:'2026-11-14',co:'2026-11-17',price:328.16},
+ s2:{id:'s2',name:'PARKROYAL Langkawi Resort',area:'Pantai Cenang',ci:'2026-11-17',co:'2026-11-20',price:1090.23},
+ s3:{id:'s3',name:'The Charm Resort Phuket',area:'Patong',ci:'2026-11-20',co:'2026-11-23',price:691.39},
+ s4:{id:'s4',name:'Samala Bangkok Sukhumvit 15 by Kingston Hotels',ci:'2026-11-23',co:'2026-11-26',price:467.26},
+ s5:{id:'s5',name:'Gate43 Airport Hotel',area:'Lat Krabang',ci:'2026-11-26',co:'2026-11-27',price:64.38,note:'Flughafenhotel, Abflug um 02:00'}
+};
+var TR={
+ t2:{id:'t2',title:'Fahrt nach Ban Patong',date:'2026-11-20',time:'17:35',tz:'+07:00'},
+ t3:{id:'t3',title:'Fahrt zum Hotel Samala (Bang Kapi)',date:'2026-11-23',time:'16:35',tz:'+07:00'}
+};
+var SEGS=[
+ {id:'kl',city:'Kuala Lumpur',country:'Malaysia',color:'#6B4DFF',g:'linear-gradient(150deg,#5B3FE0,#B44AD8 60%,#E8509A)',tz:'+08:00',inF:'f2',outF:'f3',stays:['s1'],transfers:[]},
+ {id:'lgk',city:'Langkawi',country:'Malaysia',color:'#00A39B',g:'linear-gradient(150deg,#00877F,#12A99A 60%,#3CC9A8)',tz:'+08:00',inF:'f3',outF:'f4',stays:['s2'],transfers:[]},
+ {id:'hkt',city:'Phuket',country:'Thailand',color:'#1D7BF0',g:'linear-gradient(150deg,#1565D8,#1AA6E8 70%,#4CC3EE)',tz:'+07:00',inF:'f4',outF:'f5',stays:['s3'],transfers:['t2']},
+ {id:'bkk',city:'Bangkok',country:'Thailand',color:'#F29A0B',g:'linear-gradient(150deg,#D9570A,#EE6A3C 55%,#E83A5F)',tz:'+07:00',inF:'f5',outF:'f6',stays:['s4','s5'],transfers:['t3']}
+];
+function fById(id){for(var i=0;i<F.length;i++)if(F[i].id===id)return F[i];}
+SEGS.forEach(function(s){s.inFl=fById(s.inF);s.outFl=fById(s.outF);s.stayObjs=s.stays.map(function(i){return STAYS[i];});s.trObjs=s.transfers.map(function(i){return TR[i];});});
+
+var HINTS=[
+ {k:'info',t:'Kuala Lumpur: erst zum Mitsui Outlet',b:'Nach der Landung am 14. Nov um 14:05 geht ihr mit dem Shuttle zum Outlet Mitsui am Flughafen. Offen bleiben noch die Gepäckaufbewahrung dort und die Fahrt vom Outlet ins Hotel.'},
+ {k:'info',t:'Abholzeit ist gleich Landezeit',b:'Die Transfers in Phuket (17:35) und Bangkok (16:35) sind exakt auf die Landung gebucht. Einreise und Gepäck brauchen erfahrungsgemäss 45 bis 90 Minuten. Prüfen, ob der Fahrer den Flugstatus verfolgt.'},
+ {k:'info',t:'Letzte Nacht am Flughafen',b:'Der Abflug in Bangkok ist in der Nacht von Donnerstag auf Freitag um 02:00. Deshalb übernachtet ihr im Gate43 Airport Hotel direkt am Flughafen: in Ruhe fertig machen und früh zum Check-in. Das Zimmer gibt es ab dem 26. Nov, der Check-in am Schalter öffnet etwa 3 Stunden vor Abflug.'},
+ {k:'info',t:'Gepäck: 20 kg bei Malaysia Airlines',b:'Auf den Flügen mit Malaysia Airlines (Kuala Lumpur → Langkawi und Langkawi → Phuket) gelten 20 kg Aufgabegepäck, 7 kg Handgepäck und ein Rucksack. Auf den Langstrecken mit Qatar sind es 25 kg. Packt den Koffer am besten unter 20 kg. Bangkok Airways (Phuket → Bangkok) hat eigene Regeln, bitte prüfen.'},
+ {k:'event',t:'Loy Krathong in Bangkok',b:'Das Lichterfest fällt 2026 in euren Bangkok-Aufenthalt. Die Hauptnacht wird meist mit 24. Nov angegeben (einzelne Quellen nennen den 25. Nov), Veranstaltungen laufen in Bangkok vom 17. bis 29. Nov. Programm kurz vorher prüfen.'}
+];
+var IDEAS={
+ zrh:['Check-in Qatar Airways online','Zug zum Flughafen'],
+ doh:['Essen am Hamad International','Lounge oder Ruhebereich'],
+ kl:['Mitsui Outlet am Flughafen','Petronas Twin Towers','Batu Caves','Jalan Alor Streetfood','KL Tower','Bukit Bintang','Central Market'],
+ lgk:['Skycab und SkyBridge','Pantai Cenang Strand','Mangroven und Island Hopping','Kilim Geoforest Park','Eagle Square','Sonnenuntergang am Strand'],
+ hkt:['Big Buddha','Old Phuket Town','Phi Phi Inseltour','Bangla Road Patong','Promthep Cape Sonnenuntergang','Kata und Karon Strand'],
+ bkk:['Grand Palace und Wat Pho','Wat Arun','Chinatown Yaowarat Streetfood','Jim Thompson House','Asiatique Riverfront','Loy Krathong am Fluss']
+};
+var TASKS=[
+ {id:'pass',t:'Reisepässe prüfen (alle 4)',n:'Gültigkeit für beide Länder prüfen, üblich sind mindestens 6 Monate ab Einreise.',from:'2026-11-11',due:'2026-11-12'},
+ {id:'mdac',t:'MDAC Malaysia ausfüllen (alle 4)',n:'Digitale Einreisekarte, kostenlos. QR-Code speichern. Landung in Kuala Lumpur am 14. Nov.',from:'2026-11-12',due:'2026-11-14',links:[['MDAC öffnen','https://imigresen-online.imi.gov.my/mdac/main']]},
+ {id:'bag',t:'Gepäck auf 20 kg planen',n:'Malaysia Airlines: 20 kg aufgegeben, 7 kg Handgepäck plus Rucksack. Qatar Langstrecke: 25 kg.',from:'2026-11-11',due:'2026-11-13',links:[['Malaysia Airlines','https://www.malaysiaairlines.com'],['Qatar Gepäck','https://www.qatarairways.com/en/baggage.html']]},
+ {id:'qrci',t:'Online-Check-in Qatar Airways',n:'Für Zürich, Doha und Kuala Lumpur. Zeitfenster auf der Seite prüfen.',from:'2026-11-12',due:'2026-11-13',links:[['Qatar Airways','https://www.qatarairways.com']]},
+ {id:'mitsui',t:'Shuttle zum Mitsui Outlet klären',n:'Nach der Landung am 14. Nov um 14:05.',from:'2026-11-11',due:'2026-11-13'},
+ {id:'outlet',t:'Fahrt vom Outlet ins Hotel und Gepäck klären',n:'Hotel Santa Grand Signature Kuala Lumpur.',from:'2026-11-11',due:'2026-11-13'},
+ {id:'esim',t:'eSIM oder Roaming einrichten',n:'',from:'2026-11-11',due:'2026-11-13'},
+ {id:'ins',t:'Reiseversicherung prüfen',n:'',from:'2026-11-11',due:'2026-11-13'},
+ {id:'cash',t:'Bargeld und Kreditkarte',n:'',from:'2026-11-11',due:'2026-11-13'},
+ {id:'adapt',t:'Steckdosen-Adapter einpacken',n:'',from:'2026-11-11',due:'2026-11-13'},
+ {id:'tdac',t:'TDAC Thailand ausfüllen',n:'Digitale Einreisekarte, kostenlos, auch als Gruppe möglich. Nur über die offizielle Seite. Landung in Phuket am 20. Nov.',from:'2026-11-18',due:'2026-11-20',links:[['TDAC öffnen','https://tdac.immigration.go.th']]},
+ {id:'ba',t:'Gepäckregeln Bangkok Airways prüfen',n:'Flug Phuket nach Bangkok am 23. Nov.',from:'2026-11-18',due:'2026-11-22',links:[['Bangkok Airways','https://www.bangkokair.com']]},
+ {id:'loy',t:'Loy Krathong Programm in Bangkok prüfen',n:'Hauptnacht voraussichtlich 24. Nov.',from:'2026-11-20',due:'2026-11-23'},
+ {id:'night',t:'Fahrt zum Gate43 Airport Hotel planen',n:'Samala Check-out am 26. Nov, dann zum Flughafen ins Gate43. Fahrtzeit und Check-in-Zeit des Hotels klären.',from:'2026-11-23',due:'2026-11-26'},
+ {id:'retci',t:'Online-Check-in Heimflug (QR837 und QR95)',n:'',from:'2026-11-25',due:'2026-11-26',links:[['Qatar Airways','https://www.qatarairways.com']]}
+];
+var TYPES={act:{n:'Aktivität',i:'compass'},food:{n:'Essen',i:'food'},move:{n:'Transport',i:'car'},shop:{n:'Shopping',i:'bag'},note:{n:'Notiz',i:'note'}};
+
+/* ---------- Zustand und Speicher ---------- */
+var LS='reiseplan-my-th-2026';
+function normalize(s){
+  s=s&&typeof s==='object'?s:{};
+  var items=Array.isArray(s.items)?s.items.filter(function(i){return i&&typeof i==='object'&&i.id&&i.date&&CITY[i.city];}):[];
+  var todos=Array.isArray(s.todos)?s.todos.filter(function(t){return t&&t.id&&t.t&&!/^d\d+$/.test(t.id);}):[];
+  var done=s.done&&typeof s.done==='object'&&!Array.isArray(s.done)?s.done:{};
+  return {items:items,todos:todos,done:done,updated:Number(s.updated)||0};
+}
+var state=(function(){try{var s=localStorage.getItem(LS);if(s)return normalize(JSON.parse(s));}catch(e){}return normalize({});})();
+var db=null,docRef=null,syncMode='local',pushTimer=null,LIVE=null;
+function parseLive(snap){try{var d=typeof snap.data==='function'?snap.data():(snap&&snap.data!==undefined?snap.data:snap);if(d&&d.payload){var o=JSON.parse(d.payload);if(o&&typeof o==='object')return o;}}catch(e){}return null;}
+function persistLocal(){try{localStorage.setItem(LS,JSON.stringify(state));}catch(e){}}
+function save(){
+  state.updated=Date.now();persistLocal();
+  if(docRef){clearTimeout(pushTimer);pushTimer=setTimeout(function(){try{var p=docRef.set({payload:JSON.stringify(state)});if(p&&p.catch)p.catch(function(){});}catch(e){}},400);}
+  renderAll();
+}
+function setSync(m){syncMode=m;var el=$('#syncInfo');if(el)el.textContent=syncText();}
+function syncText(){return syncMode==='cloud'?'Deine Einträge werden mit dem Konto gesichert und sind auf anderen Geräten sichtbar. Zusätzlich kannst du sie hier als Text exportieren.':'Deine Einträge liegen auf diesem Gerät. Exportiere sie regelmässig als Backup, damit nichts verloren geht.';}
+function remoteState(snap){
+  try{var d=typeof snap.data==='function'?snap.data():(snap&&snap.data!==undefined?snap.data:snap);
+    if(d&&d.payload)return normalize(JSON.parse(d.payload));}catch(e){}
+  return null;
+}
+function initDb(){
+  if(!(window.claude&&typeof window.claude.use==='function'))return;
+  var done=false;
+  var timer=setTimeout(function(){done=true;},10000);
+  window.claude.use('db').then(function(d){
+    clearTimeout(timer);if(done||!d)return;
+    db=d;docRef=db.doc('trip/state');setSync('cloud');
+    try{db.doc('trip/live').onSnapshot(function(snap){LIVE=parseLive(snap);renderAll();},function(){});}catch(e){}
+    var first=true;
+    docRef.onSnapshot(function(snap){
+      var r=remoteState(snap);
+      if(r&&r.updated>state.updated){state=r;persistLocal();renderAll();}
+      else if(first&&!r&&state.updated>0){try{docRef.set({payload:JSON.stringify(state)});}catch(e){}}
+      first=false;
+    },function(){setSync('local');});
+  }).catch(function(){});
+}
+
+/* ---------- Eigene Einträge ---------- */
+function itTz(it){return CITY[it.city].tz;}
+function itStart(it){return it.start?inst(it.date,it.start,itTz(it)):null;}
+function itEnd(it){if(!it.start)return null;var s=itStart(it);if(!it.end)return s;var e=inst(it.date,it.end,itTz(it));return e<s?s:e;}
+function segFor(t){for(var i=0;i<SEGS.length;i++){if(t<SEGS[i].outFl.depT)return SEGS[i].id;}return 'post';}
+function assign(it){
+  var tz=itTz(it);
+  if(!it.start){
+    if(it.date<=FIRST)return 'pre';
+    if(it.date>=LAST)return 'post';
+    return segFor(inst(it.date,'23:59',tz));
+  }
+  var t=inst(it.date,it.start,tz);
+  if(t<F[0].depT)return 'pre';
+  return segFor(t);
+}
+function defaultCity(d){
+  if(d<=FIRST)return 'zrh';
+  if(d<'2026-11-17')return 'kl';
+  if(d<'2026-11-20')return 'lgk';
+  if(d<'2026-11-23')return 'hkt';
+  if(d<=LAST)return 'bkk';
+  return 'zrh';
+}
+function timeText(it){if(!it.start)return 'Ganztägig';return it.end?it.start+'–'+it.end:it.start;}
+function mapLink(it){
+  if(!it.place)return '';
+  var q=encodeURIComponent(it.place+' '+CITY[it.city].n);
+  return '<a href="https://www.google.com/maps/search/?api=1&query='+q+'" target="_blank" rel="noopener">'+esc(it.place)+'</a>';
+}
+
+/* ---------- Segment-Einträge pro Tag ---------- */
+function segEntries(seg,items){
+  var E=[],tz=seg.tz;
+  if(seg.inFl)E.push({date:seg.inFl.a,key:seg.inFl.arrT,kind:'land',f:seg.inFl,timed:true,t0:seg.inFl.arrT,t1:seg.inFl.arrT});
+  if(seg.outFl)E.push({date:seg.outFl.d,key:seg.outFl.depT,kind:'dep',f:seg.outFl,timed:true,t0:seg.outFl.depT,t1:seg.outFl.depT});
+  (seg.trObjs||[]).forEach(function(t){E.push({date:t.date,key:inst(t.date,t.time,t.tz)+1,kind:'transfer',tr:t});});
+  (seg.stayObjs||[]).forEach(function(s){
+    var ko=inst(s.co,'11:00',tz);
+    if(!seg.outFl||ko<seg.outFl.depT)E.push({date:s.co,key:ko,kind:'out',s:s});
+    var ki=inst(s.ci,'15:00',tz);
+    if(seg.inFl&&s.ci===seg.inFl.a)ki=Math.max(ki,seg.inFl.arrT+2);
+    E.push({date:s.ci,key:ki,kind:'in',s:s});
+  });
+  if(seg.inFl)TASKS.forEach(function(t){
+    if(t.due<='2026-11-13')return;
+    if(assign({date:t.due,city:defaultCity(t.due)})!==seg.id)return;
+    E.push({date:t.due,key:inst(t.due,'00:03',tz),kind:'task',t:t});
+  });
+  items.forEach(function(it){
+    if(assign(it)!==seg.id)return;
+    var st=itStart(it);
+    E.push({date:it.date,key:st!=null?st:inst(it.date,'00:05',tz),kind:'item',it:it,timed:st!=null,t0:st,t1:itEnd(it)});
+  });
+  E.sort(function(a,b){return a.key-b.key;});
+  var prev=null;
+  E.forEach(function(e){
+    if(!e.timed)return;
+    if(prev&&prev.date===e.date)e.gap={ms:e.t0-prev.t1,p:prev};
+    prev=e;
+  });
+  return E;
+}
+function gapHTML(e){
+  var g=e.gap,ms=g.ms,label,st='';
+  if(ms<0){label='Überschneidung um '+dur(ms);st='bad';}
+  else if(e.kind==='dep'){
+    label=dur(ms)+(g.p.kind==='land'?' bis zum Abflug':' Puffer bis zum Abflug');
+    st=ms<3*H?'bad':ms<5*H?'warn':'ok';
+  }
+  else if(g.p.kind==='land')label=dur(ms)+' nach der Landung';
+  else label=dur(ms)+' bis zum nächsten Punkt';
+  return '<div class="gap '+st+'">'+ico('clock',15)+'<span>'+esc(label)+'</span></div>';
+}
+function rowHTML(e){
+  var ed='<button class="go" type="button" data-act="edit" data-id="'+(e.it?esc(e.it.id):'')+'" aria-label="Eintrag bearbeiten">'+ico('edit',16)+'</button>';
+  if(e.kind==='land')return '<div class="rowi anchor"><span class="ib">'+ico('plane',16)+'</span><div class="rb"><div class="rt">Landung '+e.f.at+' in '+esc(APC[e.f.to])+'</div><div class="rm">'+e.f.from+' → '+e.f.to+(e.f.no?' · '+e.f.no:'')+'</div></div></div>';
+  if(e.kind==='dep')return '<div class="rowi anchor"><span class="ib">'+ico('plane',16)+'</span><div class="rb"><div class="rt">Abflug '+e.f.dt+' nach '+esc(APC[e.f.to])+'</div><div class="rm">'+e.f.from+' → '+e.f.to+(e.f.no?' · '+e.f.no:'')+'</div></div></div>';
+  if(e.kind==='transfer')return '<div class="rowi anchor'+(e.tr.dead?' dead':'')+'"><span class="ib">'+ico('car',16)+'</span><div class="rb"><div class="rt">'+esc(e.tr.title)+'</div><div class="rm">Abholung '+e.tr.time+' · '+(e.tr.dead?'<span class="st x">Storniert</span>':'<span class="st ok">Bestätigt</span>')+'</div></div></div>';
+  if(e.kind==='task')return '<div class="rowt">'+taskRow(e.t)+'</div>';
+  if(e.kind==='in')return '<div class="rowi anchor"><span class="ib">'+ico('bed',16)+'</span><div class="rb"><div class="rt">Check-in '+esc(e.s.name)+'</div></div></div>';
+  if(e.kind==='out')return '<div class="rowi anchor"><span class="ib">'+ico('bed',16)+'</span><div class="rb"><div class="rt">Check-out '+esc(e.s.name)+'</div></div></div>';
+  var it=e.it,T=TYPES[it.type]||TYPES.act,meta=[timeText(it)];
+  if(it.place)meta.push(mapLink(it));
+  if(it.cost)meta.push(chf(it.cost));
+  return '<div class="rowi"><span class="ib">'+ico(T.i,16)+'</span><div class="rb"><div class="rt">'+esc(it.title)+'</div><div class="rm">'+meta.join(' · ')+'</div>'+(it.note?'<div class="rm">'+esc(it.note)+'</div>':'')+'</div>'+ed+'</div>';
+}
+function daysHTML(seg,E,dates){
+  var out=[];
+  dates.forEach(function(d){
+    var rows=E.filter(function(e){return e.date===d;});
+    var n=nightsBetween(FIRST,d)+1,hasItem=rows.some(function(r){return r.kind==='item';});
+    var h='<div class="day"><div class="dh"><b>'+dLabel(d)+'</b><span>Tag '+n+'</span><button class="mini" type="button" data-act="addday" data-date="'+d+'" data-city="'+(seg.id==='pre'?'zrh':seg.id==='post'?'zrh':seg.id)+'" aria-label="Eintrag für '+dLabel(d)+' hinzufügen">'+ico('plus',16)+'</button></div>';
+    rows.forEach(function(e){if(e.gap)h+=gapHTML(e);h+=rowHTML(e);});
+    if(!hasItem)h+='<button class="free" type="button" data-act="addday" data-date="'+d+'" data-city="'+(seg.id==='pre'||seg.id==='post'?'zrh':seg.id)+'">Noch frei. Aktivität hinzufügen</button>';
+    out.push(h+'</div>');
+  });
+  return out.join('');
+}
+
+/* ---------- Illustrationen (eigene Zeichnungen) ---------- */
+var SV='<svg viewBox="0 0 400 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">';
+function wins(x,y,cols,rows,sx,sy){var o='';for(var r=0;r<rows;r++)for(var c=0;c<cols;c++){if((r*7+c*3)%4===0)continue;o+='<rect x="'+(x+c*sx).toFixed(1)+'" y="'+(y+r*sy).toFixed(1)+'" width="2.4" height="3.2"/>';}return '<g fill="#FFE27A" opacity=".85">'+o+'</g>';}
+function lantern(x,y,k){return '<g transform="translate('+x+' '+y+') scale('+k+')"><circle r="13" fill="#FFE27A" opacity=".3"/><rect x="-4" y="-6" width="8" height="11" rx="3" fill="#FFB800"/><rect x="-4" y="-6" width="8" height="3" rx="1.5" fill="#FF8A00"/></g>';}
+function lotus(x,y){return '<g transform="translate('+x+' '+y+')"><circle cy="-6" r="7" fill="#FFE27A" opacity=".35"/><ellipse rx="10" ry="3" fill="#FFD36B"/><path d="M-6 0 C-4 -7 0 -9 0 -9 C0 -9 4 -7 6 0Z" fill="#fff"/><circle cy="-6" r="2.2" fill="#FFB800"/></g>';}
+function prang(cx,k){return '<g transform="translate('+cx+' 100) scale('+k+') translate(-200 -100)"><path d="M200 6 L204 18 L209 18 L206 32 L213 32 L208 50 L219 50 L212 72 L225 72 L214 100 L186 100 L175 72 L188 72 L181 50 L192 50 L187 32 L194 32 L191 18 L196 18Z" fill="#6B2A4A"/><path d="M196 50H204M193 72H207M190 90H210" stroke="#FFD36B" stroke-width="1.6"/></g>';}
+var PLANE='<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.2.4c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.4-.2c.4-.3.6-.7.5-1.2z"/>';
+var ART={};
+ART.hero=SV+
+ '<circle cx="334" cy="40" r="32" fill="#FFE27A" opacity=".28"/><circle cx="334" cy="40" r="19" fill="#FFE27A"/>'+
+ '<g class="drift"><use href="#cloud" transform="translate(70 34) scale(.9)" opacity=".9"/><use href="#cloud" transform="translate(196 18) scale(.6)" opacity=".75"/></g>'+
+ '<path d="M-10 106 C90 104 190 76 292 38" stroke="#fff" stroke-width="2.6" stroke-dasharray="2 7" stroke-linecap="round" fill="none" opacity=".9"/>'+
+ '<g transform="translate(296 36) rotate(25) scale(1.9) translate(-12 -12)" fill="#fff" stroke="#fff" stroke-width=".6">'+PLANE+'</g>'+
+ '<use href="#bird" transform="translate(120 70)"/><use href="#bird" transform="translate(148 60) scale(.7)"/>'+
+ '<use href="#palm" transform="translate(24 122) scale(1.15)"/><use href="#palm" transform="translate(380 122) scale(-1.25 1.25)"/>'+
+ '<path d="M0 98 C60 86 120 108 200 96 C280 84 340 106 400 94 V120 H0Z" fill="#fff"/></svg>';
+ART.kl=SV+
+ '<circle cx="332" cy="36" r="30" fill="#FFE27A" opacity=".25"/><circle cx="332" cy="36" r="19" fill="#FFE27A"/>'+
+ '<g class="drift"><use href="#cloud" transform="translate(74 30) scale(.8)" opacity=".85"/><use href="#cloud" transform="translate(262 20) scale(.6)" opacity=".75"/></g>'+
+ '<g fill="#9A7CFF" opacity=".7"><rect x="8" y="70" width="26" height="50"/><rect x="38" y="56" width="22" height="64"/><rect x="64" y="78" width="30" height="42"/><rect x="292" y="66" width="28" height="54"/><rect x="324" y="82" width="24" height="38"/><rect x="352" y="58" width="32" height="62"/></g>'+
+ '<g fill="#4A2BC4"><rect x="112" y="46" width="5" height="74"/><ellipse cx="114.5" cy="44" rx="10" ry="6.5"/><rect x="113.6" y="16" width="1.8" height="30"/></g>'+
+ '<g fill="#3A1FA8"><polygon points="172,120 172,56 177,46 180,36 182,22 184,6 186,22 188,36 191,46 196,56 196,120"/><polygon points="208,120 208,56 213,46 216,36 218,22 220,6 222,22 224,36 227,46 232,56 232,120"/><rect x="196" y="64" width="12" height="5" fill="#6A4DF0"/></g>'+
+ wins(175,62,5,12,3.8,4.4)+wins(211,62,5,12,3.8,4.4)+
+ '<g fill="#2B1584"><rect x="128" y="86" width="36" height="34"/><rect x="240" y="80" width="32" height="40"/><rect x="0" y="98" width="120" height="22"/><rect x="274" y="98" width="126" height="22"/></g>'+
+ wins(131,90,7,6,4.8,4.8)+wins(243,84,6,7,4.8,4.8)+
+ '<circle cx="20" cy="104" r="9" fill="#2BBF73"/><circle cx="40" cy="108" r="7" fill="#1E9E5A"/><circle cx="372" cy="106" r="9" fill="#2BBF73"/><circle cx="388" cy="110" r="7" fill="#1E9E5A"/></svg>';
+ART.lgk=SV+
+ '<circle cx="64" cy="36" r="34" fill="url(#gGlow)"/><circle cx="64" cy="36" r="17" fill="#FFE27A"/>'+
+ '<g class="drift"><use href="#cloud" transform="translate(190 24) scale(.7)" opacity=".85"/><use href="#cloud" transform="translate(340 14) scale(.5)" opacity=".7"/></g>'+
+ '<path d="M110 90 C140 52 176 30 214 22 C246 18 280 42 312 90Z" fill="url(#gM2)" opacity=".9"/>'+
+ '<path d="M60 92 C96 70 130 56 170 62 C210 40 250 40 300 92Z" fill="url(#gM1)"/>'+
+ '<path d="M214 22 C230 30 242 48 256 90 L230 90 C226 60 220 40 214 22Z" fill="#0B6E64" opacity=".35"/>'+
+ '<path d="M120 90 C134 70 150 62 166 64 L150 90Z" fill="#fff" opacity=".12"/>'+
+ '<g fill="#0E8A63" opacity=".9"><circle cx="96" cy="84" r="6"/><circle cx="108" cy="86" r="5"/><circle cx="260" cy="82" r="6"/><circle cx="274" cy="85" r="5"/></g>'+
+ '<line x1="62" y1="64" x2="214" y2="26" stroke="#fff" stroke-width="1.5" opacity=".95"/>'+
+ '<g transform="translate(62 64)"><g class="cab"><g transform="rotate(-14)"><line x1="0" y1="0" x2="0" y2="9" stroke="#fff" stroke-width="1.4"/><rect x="-10" y="9" width="20" height="14" rx="4" fill="url(#gCab)"/><rect x="-7" y="12" width="14" height="6" rx="2" fill="#fff" opacity=".9"/><rect x="-10" y="20" width="20" height="3" rx="1.5" fill="#B01C42" opacity=".5"/></g></g></g>'+
+ '<rect x="204" y="18" width="14" height="6" rx="2" fill="#fff"/>'+
+ '<rect y="88" width="400" height="32" fill="url(#gSea)"/>'+
+ '<g stroke="#fff" opacity=".5" stroke-width="2" fill="none" stroke-linecap="round" class="shim"><path d="M10 98 q8 -5 16 0 t16 0"/><path d="M130 106 q8 -5 16 0 t16 0"/><path d="M70 112 q8 -5 16 0 t16 0"/><path d="M220 100 q8 -5 16 0 t16 0"/></g>'+
+ '<ellipse cx="262" cy="104" rx="26" ry="4" fill="#06506F" opacity=".35" filter="url(#fBlur)"/>'+
+ '<g class="boat"><path d="M244 96 L284 96 L277 103 L251 103Z" fill="#fff"/><path d="M264 94 L264 66 L284 92Z" fill="#fff"/><path d="M261 94 L261 72 L248 92Z" fill="#FFE27A"/></g>'+
+ '<path d="M300 120 C330 102 366 100 400 104 V120Z" fill="#FFE3A3"/><path d="M330 120 C350 110 372 108 400 112 V120Z" fill="#F5C770"/>'+
+ '<use href="#palm" transform="translate(332 116) scale(.9)"/><use href="#palm" transform="translate(386 118) scale(-1.1 1.1)"/>'+
+ '<use href="#bird" transform="translate(120 18)"/><use href="#bird" transform="translate(144 10) scale(.7)"/></svg>';
+ART.hkt=SV+
+ '<circle cx="332" cy="34" r="30" fill="#FFE27A" opacity=".28"/><circle cx="332" cy="34" r="18" fill="#FFE27A"/>'+
+ '<g class="drift"><use href="#cloud" transform="translate(110 22) scale(.75)" opacity=".85"/><use href="#cloud" transform="translate(240 36) scale(.5)" opacity=".7"/></g>'+
+ '<path d="M22 86 C20 58 30 36 46 34 C62 34 68 58 66 86Z" fill="#2B8F7B"/><path d="M58 86 C62 64 76 48 90 50 C104 52 112 70 112 86Z" fill="#3FB08F"/><path d="M112 86 C118 72 130 66 140 70 C150 74 154 80 156 86Z" fill="#5FCFA9"/>'+
+ '<g fill="#1B6B4F"><circle cx="40" cy="38" r="5"/><circle cx="52" cy="40" r="4"/><circle cx="86" cy="52" r="4"/><circle cx="97" cy="54" r="3.5"/></g>'+
+ '<rect y="84" width="400" height="36" fill="#1B8CE0"/>'+
+ '<g stroke="#fff" opacity=".45" stroke-width="2" fill="none" stroke-linecap="round"><path d="M14 96 q8 -5 16 0 t16 0"/><path d="M110 106 q8 -5 16 0 t16 0"/><path d="M180 92 q8 -5 16 0 t16 0"/><path d="M60 110 q8 -5 16 0 t16 0"/></g>'+
+ '<g transform="translate(236 92)"><g class="bob"><path d="M0 0 H92 C88 12 74 18 60 18 H22 C10 18 2 10 0 0Z" fill="#FF5E73"/><rect width="92" height="4" fill="#FFD23F"/><path d="M22 0 V-16 H70 V0Z" fill="#fff" opacity=".95"/><rect x="22" y="-16" width="48" height="4" fill="#FFD23F"/><path d="M0 0 C-6 -8 -10 -18 -8 -28" fill="none" stroke="#FFD23F" stroke-width="3.5" stroke-linecap="round"/><rect x="-14" y="-32" width="3" height="10" rx="1.5" fill="#fff"/><rect x="-9" y="-31" width="3" height="9" rx="1.5" fill="#7B5CFF"/><rect x="-4" y="-30" width="3" height="8" rx="1.5" fill="#FF5E73"/><line x1="90" y1="3" x2="130" y2="24" stroke="#5B3A29" stroke-width="3" stroke-linecap="round"/><circle cx="132" cy="25" r="4" fill="#5B3A29"/></g></g>'+
+ '<path d="M226 108 q8 -4 16 0" stroke="#fff" opacity=".7" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+ '<use href="#bird" transform="translate(190 14)"/><use href="#bird" transform="translate(214 8) scale(.7)"/></svg>';
+ART.bkk=SV+
+ '<circle cx="200" cy="58" r="60" fill="url(#gGlow)"/><circle cx="200" cy="56" r="26" fill="#FFE27A"/>'+
+ '<g class="drift"><use href="#cloud" transform="translate(70 22) scale(.6)" opacity=".5"/><use href="#cloud" transform="translate(320 30) scale(.5)" opacity=".45"/></g>'+
+ '<g fill="url(#gSk1)" opacity=".85"><rect x="6" y="62" width="22" height="46"/><rect x="30" y="48" width="18" height="60"/><rect x="52" y="70" width="26" height="38"/><rect x="316" y="58" width="24" height="50"/><rect x="342" y="72" width="22" height="36"/><rect x="368" y="52" width="26" height="56"/></g>'+
+ '<g fill="url(#gSk2)"><rect x="84" y="78" width="32" height="30"/><rect x="284" y="76" width="30" height="32"/></g>'+
+ '<g fill="url(#gPr)">'+
+ '<g transform="translate(200 106) scale(1.15) translate(-200 -100)"><path d="M200 -4 L204 8 L209 8 L206 24 L213 24 L208 44 L219 44 L212 68 L225 68 L214 100 L186 100 L175 68 L188 68 L181 44 L192 44 L187 24 L194 24 L191 8 L196 8Z"/></g>'+
+ '<g transform="translate(146 106) scale(.62) translate(-200 -100)"><path d="M200 -4 L204 8 L209 8 L206 24 L213 24 L208 44 L219 44 L212 68 L225 68 L214 100 L186 100 L175 68 L188 68 L181 44 L192 44 L187 24 L194 24 L191 8 L196 8Z"/></g>'+
+ '<g transform="translate(254 106) scale(.62) translate(-200 -100)"><path d="M200 -4 L204 8 L209 8 L206 24 L213 24 L208 44 L219 44 L212 68 L225 68 L214 100 L186 100 L175 68 L188 68 L181 44 L192 44 L187 24 L194 24 L191 8 L196 8Z"/></g></g>'+
+ '<path d="M200 6 L203 18 L197 18Z" fill="#fff" opacity=".7"/><g fill="#C77A1A" opacity=".5"><rect x="193" y="62" width="14" height="4"/><rect x="190" y="82" width="20" height="4"/></g>'+
+ '<g class="rise">'+lantern(44,34,1)+lantern(100,52,.7)+lantern(300,40,.9)+'</g><g class="rise r2">'+lantern(76,20,.8)+lantern(344,24,1)+lantern(246,18,.7)+'</g><g class="rise r3">'+lantern(130,26,.8)+lantern(372,48,.7)+lantern(170,42,.5)+'</g>'+
+ '<rect y="104" width="400" height="16" fill="url(#gRiv)"/>'+
+ '<g opacity=".5" class="shim"><path d="M170 108 h60 M178 112 h44 M186 116 h28" stroke="#FFE27A" stroke-width="2" stroke-linecap="round"/></g>'+
+ '<g class="boat"><path d="M300 110 L340 110 L350 106 L336 114 L306 114Z" fill="#4F1D38"/><rect x="316" y="102" width="14" height="8" rx="2" fill="#FFD23F"/><path d="M312 108 L352 108" stroke="#fff" stroke-width="1.5" opacity=".7"/></g>'+
+ lotus(60,114)+lotus(104,116)+lotus(36,116)+'</svg>';
+ART.add='<svg viewBox="0 0 400 90" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">'+
+ '<circle cx="62" cy="40" r="28" fill="#fff" opacity=".35"/><circle cx="62" cy="40" r="17" fill="#FFF3B0"/>'+
+ '<g class="drift"><use href="#cloud" transform="translate(300 24) scale(.7)" opacity=".9"/></g>'+
+ '<g transform="translate(150 18)"><path d="M22 14 V8 a4 4 0 0 1 4 -4 H44 a4 4 0 0 1 4 4 V14" fill="none" stroke="#7A2E1A" stroke-width="4"/><rect y="14" width="70" height="52" rx="9" fill="#E8365D"/><rect x="14" y="14" width="7" height="52" fill="#FF7A98"/><rect x="49" y="14" width="7" height="52" fill="#FF7A98"/><circle cx="35" cy="40" r="7" fill="#FFE27A"/><rect x="10" y="66" width="8" height="6" rx="2" fill="#4F1D38"/><rect x="52" y="66" width="8" height="6" rx="2" fill="#4F1D38"/></g>'+
+ '<g transform="translate(232 40)"><path d="M14 8 V4 a3 3 0 0 1 3 -3 H29 a3 3 0 0 1 3 3 V8" fill="none" stroke="#08574F" stroke-width="3"/><rect y="8" width="46" height="34" rx="7" fill="#12A99A"/><rect x="18" y="8" width="5" height="34" fill="#5FE0CF"/><rect x="8" y="42" width="6" height="4" rx="1.5" fill="#08574F"/><rect x="32" y="42" width="6" height="4" rx="1.5" fill="#08574F"/></g>'+
+ '<use href="#palm" transform="translate(356 96) scale(.95)"/></svg>';
+ART.ov='<svg viewBox="0 0 400 90" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">'+
+ '<g class="drift"><use href="#cloud" transform="translate(60 18) scale(.6)" opacity=".7"/><use href="#cloud" transform="translate(340 14) scale(.5)" opacity=".6"/></g>'+
+ '<path d="M54 56 C90 18 110 18 146 32 S200 66 238 54 S300 16 330 28" stroke="#fff" stroke-width="2.6" stroke-dasharray="2 7" stroke-linecap="round" fill="none"/>'+
+ '<g transform="translate(192 46) rotate(20) scale(1.3) translate(-12 -12)" fill="#fff">'+PLANE+'</g>'+
+ '<g stroke="#fff" stroke-width="3.5"><circle cx="54" cy="56" r="9" fill="#6B4DFF"/><circle cx="146" cy="32" r="9" fill="#00A39B"/><circle cx="238" cy="54" r="9" fill="#1D7BF0"/><circle cx="330" cy="28" r="9" fill="#F29A0B"/></g>'+
+ '<g fill="#fff" font-family="Figtree,system-ui,sans-serif" font-size="12" font-weight="700" text-anchor="middle"><text x="54" y="80">KL</text><text x="146" y="56">Langkawi</text><text x="238" y="78">Phuket</text><text x="330" y="52">Bangkok</text></g></svg>';
+
+/* ---------- Live: Wetter und Flugstatus ---------- */
+function ago(ms){var m=Math.round((Date.now()-ms)/6e4);if(m<2)return 'gerade eben';if(m<60)return 'vor '+m+' Min';var h=Math.round(m/60);if(h<48)return 'vor '+h+' Std';return 'vor '+Math.round(h/24)+' Tagen';}
+function wxHTML(id){
+  var w=LIVE&&LIVE.weather&&LIVE.weather[id];if(!w)return '';
+  var days=(w.days||[]).slice(0,3).map(function(d){return '<span class="wd"><b>'+esc(String(d.d||''))+'</b>'+esc(String(d.hi))+'° / '+esc(String(d.lo))+'°<i>'+esc(String(d.rain))+'%</i></span>';}).join('');
+  return '<div class="wx"><div class="wn"><strong>'+esc(String(w.t))+'°</strong><span>'+esc(String(w.txt||''))+'</span></div><div class="wr">Regen '+esc(String(w.rain))+'%'+(w.hum?' · Luft '+esc(String(w.hum))+'%':'')+'</div>'+(days?'<div class="wds">'+days+'</div>':'')+'<small>Live vor Ort · '+(LIVE.updated?ago(LIVE.updated):'')+'</small></div>';
+}
+function liveFlight(f){return LIVE&&LIVE.flights&&LIVE.flights[f.no||(f.from+f.to)]||null;}
+function fsChip(f){
+  var l=liveFlight(f);if(!l)return '';
+  var c=l.s==='cancel'?'bad':l.s==='delay'?(l.min>=60?'bad':'warn'):'ok';
+  var t=l.s==='cancel'?'Gestrichen':l.s==='delay'?'Verspätung '+l.min+' Min':l.s==='early'?'Früher: '+(l.min||0)+' Min':'Pünktlich';
+  return '<div class="fs '+c+'"><b>'+t+'</b>'+(l.new?' · neu '+esc(l.new):'')+(l.gate?' · Gate '+esc(l.gate):'')+(l.note?'<span>'+esc(l.note)+'</span>':'')+'<small>Live · '+(LIVE.updated?ago(LIVE.updated):'')+'</small></div>';
+}
+function liveBanner(){
+  if(!LIVE||!LIVE.flights)return '';
+  var bad=F.filter(function(f){var l=liveFlight(f);return l&&(l.s==='cancel'||(l.s==='delay'&&l.min>=30));});
+  if(!bad.length)return '';
+  return '<div class="sec">Achtung</div><div class="panel livebad">'+bad.map(function(f){var l=liveFlight(f);return '<div class="trow"><div class="tb"><div class="tt">'+esc(f.no||f.air)+' '+f.from+' nach '+f.to+'</div><div class="tm"><span class="stp bad">'+(l.s==='cancel'?'Gestrichen':'Verspätung '+l.min+' Min')+'</span></div>'+(l.note?'<div class="tn">'+esc(l.note)+'</div>':'')+'</div></div>';}).join('')+'</div>';
+}
+
+/* ---------- Aufgaben und Erinnerungen ---------- */
+function isDone(id){return !!state.done[id];}
+function taskStatus(t){
+  var today=zrhDate(Date.now());
+  if(isDone(t.id))return {c:'ok',t:'Erledigt'};
+  if(today<t.from){var tm=addDays(today,1);return {c:'',t:t.from===tm?'Ab morgen möglich':'Ab '+dLabel(t.from)+' möglich',locked:true};}
+  if(today>t.due)return {c:'bad',t:'Überfällig seit '+dLabel(t.due)};
+  if(today===t.due)return {c:'warn',t:'Heute fällig'};
+  if(today===t.from&&t.from!==t.due)return {c:'ok',t:'Ab heute möglich · bis '+dShort(t.due)};
+  return {c:'ok',t:'Jetzt möglich · bis '+dShort(t.due)};
+}
+function taskRow(t,compact){
+  var st=taskStatus(t),done=isDone(t.id);
+  var lk=(t.links||[]).map(function(l){return '<a class="lk" href="'+esc(l[1])+'" target="_blank" rel="noopener">'+esc(l[0])+' ↗</a>';}).join('');
+  return '<div class="trow'+(done?' done':'')+(st.locked?' lockd':'')+'"><button class="cb" type="button" data-act="task" data-id="'+t.id+'" role="checkbox" aria-checked="'+(done?'true':'false')+'" aria-label="'+esc(t.t)+'">'+(done?ico('check',16):'')+'</button><div class="tb"><div class="tt">'+esc(t.t)+'</div>'+(t.n&&!compact?'<div class="tn">'+esc(t.n)+'</div>':'')+'<div class="tm"><span class="stp '+st.c+'">'+esc(st.t)+'</span>'+lk+'</div></div></div>';
+}
+function byDue(a,b){return a.due<b.due?-1:a.due>b.due?1:(a.from<b.from?-1:a.from>b.from?1:0);}
+function reminderHTML(){
+  var today=zrhDate(Date.now());
+  var open=TASKS.filter(function(t){return !isDone(t.id);});
+  var now=open.filter(function(t){return t.from<=today;}).sort(byDue);
+  var next=open.filter(function(t){return t.from>today;}).sort(function(a,b){return a.from<b.from?-1:a.from>b.from?1:0;}).slice(0,2);
+  var h='<div class="sec">Erinnerung <span class="n">'+now.length+'</span></div><div class="panel rem">';
+  if(!now.length&&!next.length)h+='<div class="empty">Alles erledigt. Gute Reise!</div>';
+  now.slice(0,4).forEach(function(t){h+=taskRow(t,true);});
+  if(now.length>4)h+='<div class="tn" style="padding:8px 0 2px">Und '+(now.length-4)+' weitere in der Vorbereitung unten und in der Übersicht.</div>';
+  if(next.length){h+='<div class="nx">Als Nächstes</div>';next.forEach(function(t){h+=taskRow(t,true);});}
+  return h+'</div>';
+}
+function prepCard(){
+  var list=TASKS.filter(function(t){return t.due<='2026-11-13';}).sort(byDue),days={};
+  list.forEach(function(t){(days[t.due]=days[t.due]||[]).push(t);});
+  var dn=list.filter(function(t){return isDone(t.id);}).length;
+  var h='<article class="card mini-card"><div class="prh"><h3>Vorbereitung</h3><span class="stp '+(dn===list.length?'ok':'')+'">'+dn+' von '+list.length+' erledigt</span></div>';
+  Object.keys(days).sort().forEach(function(d){h+='<div class="day"><div class="dh"><b>Bis '+dLabel(d)+'</b><span></span></div>'+days[d].map(function(t){return taskRow(t);}).join('')+'</div>';});
+  return h+'</article>';
+}
+
+/* ---------- Timeline ---------- */
+function flightCard(f){
+  var d=f.arrT-f.depT,dz=parseInt(f.az,10)-parseInt(f.dz,10),tags=[];
+  tags.push('<span class="tag">'+(f.stops?f.stops+' Zwischenstopp':'Direkt')+'</span>');
+  if(f.cls)tags.push('<span class="tag">'+f.cls+'</span>');
+  if(f.bag)tags.push('<span class="tag">'+esc(f.bag)+'</span>');
+  if(f.hand)tags.push('<span class="tag">'+esc(f.hand)+'</span>');
+  if(f.op)tags.push('<span class="tag">durchgeführt von '+esc(f.op)+'</span>');
+  if(f.extra)tags.push('<span class="tag">'+esc(f.extra)+'</span>');
+  if(f.price)tags.push('<span class="tag p">'+chf(f.price)+' für 4</span>');
+  if(f.lk)tags.push('<a class="lk" href="'+f.lk[1]+'" target="_blank" rel="noopener">'+esc(f.lk[0])+' ↗</a>');
+  var nextDay=f.a>f.d?' <small>+1</small>':'';
+  return '<article class="card fl"><div class="meta"><span>Flug '+esc(f.no||f.air)+(f.no?' · '+esc(f.air):'')+'</span><span class="d">'+dLabel(f.d)+'</span></div>'+
+   '<div class="legs"><div><div class="time">'+f.dt+'</div><div class="ap">'+f.from+'</div><div class="cy">'+esc(APC[f.from])+'</div></div>'+
+   '<div class="mid"><div class="ln">'+ico('plane',18)+'</div><span>'+dur(d)+'</span>'+(dz?'<span style="font-weight:500;color:var(--muted)">'+(dz>0?'+':'')+dz+' Std Zeit</span>':'')+'</div>'+
+   '<div class="r"><div class="time">'+f.at+nextDay+'</div><div class="ap">'+f.to+'</div><div class="cy">'+esc(APC[f.to])+'</div></div></div>'+
+   '<div class="tags">'+tags.join('')+'</div>'+fsChip(f)+'</article>';
+}
+function layover(a,b){
+  var ms=b.depT-a.arrT,st=ms<90*6e4?'bad':ms>5*H?'':'ok',lab=ms<90*6e4?'Knapp':ms>5*H?'Lang':'Gut';
+  return '<div class="conn"><span class="chip '+st+'">'+ico('clock',16)+'<span>Umstieg '+esc(APC[a.to])+': <b>'+dur(ms)+'</b> · '+lab+'</span></span></div>';
+}
+function spacer(){return '<div class="conn"></div>';}
+function segCard(s,items){
+  var c=s.color,st0=s.stayObjs[0],stN=s.stayObjs[s.stayObjs.length-1];
+  var nights=nightsBetween(st0.ci,stN.co),total=s.outFl.depT-s.inFl.arrT,ahead=parseInt(s.tz,10)-1;
+  var E=segEntries(s,items);
+  var set={};range(s.inFl.a,s.outFl.d).forEach(function(d){set[d]=1;});
+  E.forEach(function(e){set[e.date]=1;});
+  var dates=Object.keys(set).sort();
+  var stays=s.stayObjs.map(function(h){
+    var n=nightsBetween(h.ci,h.co);
+    return '<div class="stay"><span class="ib">'+ico('bed',20)+'</span><div class="t"><b>'+esc(h.name)+'</b><span>'+dShort(h.ci)+' bis '+dShort(h.co)+' · '+n+(n===1?' Nacht':' Nächte')+(h.area?' · '+esc(h.area):'')+'</span>'+(h.note?'<br><span>'+esc(h.note)+'</span>':'')+'</div><div class="pr">'+chf(h.price)+'<br><span class="st ok">Bestätigt</span></div></div>';
+  }).join('');
+  return '<article class="card seg" style="--c:'+c+';--cbg:'+c+'1F;--g:'+s.g+'"><div class="head"><div class="row"><div><div class="cty">'+s.country+' · Ortszeit '+(ahead>0?'+':'')+ahead+' Std zu Zürich</div><h2>'+esc(s.city)+'</h2></div><span class="np">'+nights+(nights===1?' Nacht':' Nächte')+'</span></div>'+
+   wxHTML(s.id)+'<div class="time-on-site"><small>Zeit vor Ort</small><strong>'+dur(total)+'</strong><span>Landung '+dShort(s.inFl.a)+' um '+s.inFl.at+', Abflug '+dShort(s.outFl.d)+' um '+s.outFl.dt+'</span></div><div class="art">'+ART[s.id]+'</div></div>'+
+   '<div class="body">'+stays+daysHTML(s,E,dates)+'</div></article>';
+}
+function miniBlock(id,title,items){
+  var seg=id==='pre'?{id:'pre',tz:'+01:00',outFl:F[0],trObjs:[],stayObjs:[]}:{id:'post',tz:'+01:00',inFl:F[6],trObjs:[],stayObjs:[]};
+  var E=segEntries(seg,items);
+  if(!E.some(function(e){return e.kind==='item';}))return '';
+  var set={};E.forEach(function(e){set[e.date]=1;});
+  return '<article class="card seg mini-card" style="--c:#5B6B82;--cbg:#5B6B821F"><h3>'+title+'</h3>'+daysHTML(seg,E,Object.keys(set).sort())+'</article>';
+}
+var LAB=['Tage','Std','Min','Sek'];
+var STARS=[['8%','16%',0],['90%','9%',.6],['76%','44%',1.1],['24%','50%',1.7],['52%','6%',.3],['95%','58%',1.4]].map(function(x){return '<i class="sp" style="left:'+x[0]+';top:'+x[1]+';animation-delay:'+x[2]+'s"></i>';}).join('');
+function cdParts(ms){var q=Math.max(0,Math.floor(ms/1000));return [Math.floor(q/86400),Math.floor(q%86400/3600),Math.floor(q%3600/60),q%60];}
+function cdNum(p,i){return i===0?String(p[0]):(p[i]<10?'0'+p[i]:String(p[i]));}
+function cdTarget(){var n=Date.now();if(n<F[0].depT)return {t:F[0].depT,kind:'start'};if(n<F[5].depT)return {t:F[5].depT,kind:'trip'};return null;}
+function zrhDate(ms){try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Zurich',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms));}catch(e){return new Date(ms+36e5).toISOString().slice(0,10);}}
+function cdHead(tg){
+  if(tg.kind==='trip')return 'Noch bis zum Rückflug';
+  var sl=nightsBetween(zrhDate(Date.now()),zrhDate(F[0].depT));
+  return sl>=2?'Noch '+sl+' Mal schlafen':sl===1?'Morgen geht’s los!':'Heute geht’s los!';
+}
+function fcHTML(i,t){return '<div class="cu"><div class="fc c'+i+'" data-cd="'+i+'" data-v="'+t+'"><div class="h up"><b>'+t+'</b></div><div class="h dn"><b>'+t+'</b></div><div class="h fup"><b>'+t+'</b></div><div class="h fdn"><b>'+t+'</b></div></div><span>'+LAB[i]+'</span></div>';}
+function cdHTML(){
+  var now=Date.now(),tg=cdTarget();
+  if(tg){
+    var ms=tg.t-now,p=cdParts(ms),cards='',i;
+    for(i=0;i<4;i++)cards+=fcHTML(i,cdNum(p,i));
+    var sub=tg.kind==='start'?'Abflug Fr 13. Nov um 15:10 in Zürich':'Rückflug Fr 27. Nov um 02:00 in Bangkok';
+    var extra='';
+    if(tg.kind==='start'){extra='<div class="cdc"><span id="cdTot">'+Math.floor(ms/H)+' Stunden bis zum Abflug</span><span>Zürcher Zeit</span></div>';}
+    else{
+      var pr=Math.max(0,Math.min(1,(now-F[0].depT)/(F[6].arrT-F[0].depT)))*100;
+      extra='<div class="trk" aria-hidden="true"><div class="bar"><i style="width:'+pr.toFixed(1)+'%"></i><s style="left:'+pr.toFixed(1)+'%">'+ico('plane',15)+'</s></div><div class="trl"><span>Zürich</span><span>Reisetag '+(Math.floor((now-F[0].depT)/864e5)+1)+' von 15</span><span>Zürich</span></div></div>';
+    }
+    return '<div class="cd" role="timer" aria-label="Countdown"><div class="cdh"><span class="cdt" id="cdHead">'+cdHead(tg)+'</span><span class="cdp">'+sub+'</span></div><div class="cdg">'+cards+'</div>'+extra+'</div>';
+  }
+  if(now<=F[6].arrT)return '<div class="cd"><div class="cdm">Auf dem Heimweg</div><div class="cdp" style="margin-top:4px">Landung in Zürich Fr 27. Nov um 13:40</div></div>';
+  return '<div class="cd"><div class="cdm">Zurück zuhause</div><div class="cdp" style="margin-top:4px">Schöne Erinnerungen an Malaysia und Thailand</div></div>';
+}
+function flipTo(fc,t){
+  var old=fc.getAttribute('data-v');if(old===t)return;
+  fc.setAttribute('data-v',t);
+  var up=fc.querySelector('.up b'),dn=fc.querySelector('.dn b'),fu=fc.querySelector('.fup b'),fd=fc.querySelector('.fdn b');
+  up.textContent=t;fu.textContent=old;fd.textContent=t;dn.textContent=old;
+  fc.classList.remove('go');void fc.offsetWidth;fc.classList.add('go');
+  clearTimeout(fc._t);
+  fc._t=setTimeout(function(){dn.textContent=t;fu.textContent=t;fc.classList.remove('go');},640);
+}
+function tick(){
+  var cards=document.querySelectorAll('.fc[data-cd]');if(!cards.length)return;
+  var tg=cdTarget();if(!tg){renderTimeline();return;}
+  var ms=tg.t-Date.now();if(ms<=0){renderTimeline();return;}
+  var p=cdParts(ms),i;
+  for(i=0;i<cards.length;i++)flipTo(cards[i],cdNum(p,Number(cards[i].getAttribute('data-cd'))));
+  var h=document.getElementById('cdHead');if(h)h.textContent=cdHead(tg);
+  var t=document.getElementById('cdTot');if(t)t.textContent=Math.floor(ms/H)+' Stunden bis zum Abflug';
+}
+setInterval(tick,1000);
+function heroHTML(){
+  var nights=SEGS.reduce(function(a,s){return a+nightsBetween(s.stayObjs[0].ci,s.stayObjs[s.stayObjs.length-1].co);},0);
+  var bar=SEGS.map(function(s){var n=nightsBetween(s.stayObjs[0].ci,s.stayObjs[s.stayObjs.length-1].co);return '<i style="--c:'+s.color+';flex:'+n+'"></i>';}).join('');
+  var lab=SEGS.map(function(s){var n=nightsBetween(s.stayObjs[0].ci,s.stayObjs[s.stayObjs.length-1].co);return '<span style="flex:'+n+'">'+esc(s.city.replace('Kuala Lumpur','KL'))+'</span>';}).join('');
+  return '<section class="hero"><div class="hbg"><div class="hin">'+STARS+'<h1>Malaysia und Thailand</h1><div class="dates">13. bis 27. Nov 2026 · 4 Reisende</div>'+cdHTML()+'</div><div class="art">'+ART.hero+'</div></div><div class="low">'+
+    '<div class="route" aria-hidden="true">'+bar+'</div><div class="routelab">'+lab+'</div>'+
+    '<div class="stats"><div class="stat"><b>'+nights+'</b><span>Nächte</span></div><div class="stat"><b>'+F.length+'</b><span>Flüge</span></div><div class="stat"><b>'+SEGS.length+'</b><span>Stationen</span></div></div></div></section>';
+}
+function hintsHTML(){
+  var ic={warn:'alert',check:'alert',info:'info',event:'compass'};
+  return '<div class="sec">Gut zu wissen <span class="n">'+HINTS.length+'</span></div>'+HINTS.map(function(h){
+    return '<details class="hint k-'+h.k+'"><summary><span class="ib">'+ico(ic[h.k],17)+'</span><span class="t">'+esc(h.t)+'</span><span class="chev">'+ico('chev',18)+'</span></summary><div class="body">'+esc(h.b)+'</div></details>';
+  }).join('');
+}
+function renderTimeline(){
+  var items=state.items,h=heroHTML()+liveBanner()+reminderHTML()+hintsHTML()+'<div class="sec">Timeline</div><div class="stream">';
+  h+=prepCard()+spacer();
+  var pre=miniBlock('pre','Vor dem Abflug',items);
+  if(pre)h+=pre+spacer();
+  h+=flightCard(F[0])+layover(F[0],F[1])+flightCard(F[1])+spacer();
+  h+=segCard(SEGS[0],items)+spacer()+flightCard(F[2])+spacer();
+  h+=segCard(SEGS[1],items)+spacer()+flightCard(F[3])+spacer();
+  h+=segCard(SEGS[2],items)+spacer()+flightCard(F[4])+spacer();
+  h+=segCard(SEGS[3],items)+spacer()+flightCard(F[5])+layover(F[5],F[6])+flightCard(F[6]);
+  var post=miniBlock('post','Nach der Landung',items);
+  if(post)h+=spacer()+post;
+  h+='</div>';
+  $('#tl').innerHTML=h;
+}
+
+/* ---------- Hinzufügen ---------- */
+var editingId=null,cityTouched=false;
+function fillSelects(){
+  var ds=range(FIRST,LAST).map(function(d){return '<option value="'+d+'">'+dLabel(d)+'</option>';}).join('');
+  $('#fDate').innerHTML=ds;
+  $('#fCity').innerHTML=Object.keys(CITY).map(function(k){return '<option value="'+k+'">'+CITY[k].n+'</option>';}).join('');
+  $('#types').innerHTML=Object.keys(TYPES).map(function(k,i){return '<label><input type="radio" name="ftype" value="'+k+'"'+(i===0?' checked':'')+'><span>'+ico(TYPES[k].i,16)+TYPES[k].n+'</span></label>';}).join('');
+}
+function readForm(){
+  var cost=parseFloat(String($('#fCost').value).replace(',','.'));
+  var t=document.querySelector('input[name="ftype"]:checked');
+  return {type:t?t.value:'act',title:$('#fTitle').value.trim(),date:$('#fDate').value,city:$('#fCity').value,start:$('#fStart').value,end:$('#fEnd').value,place:$('#fPlace').value.trim(),cost:isFinite(cost)&&cost>0?cost:0,note:$('#fNote').value.trim()};
+}
+function preview(d){
+  if(!d.date)return {t:'',w:false};
+  var tz=CITY[d.city].tz;
+  if(!d.start)return {t:'Ganztägig am '+dLabel(d.date)+' in '+CITY[d.city].n+'. Mit Uhrzeit zeige ich dir die Zeit bis zum Flug.',w:false};
+  var t=inst(d.date,d.start,tz),end=d.end?inst(d.date,d.end,tz):t;if(end<t)end=t;
+  var sid=assign(d),parts=[],warn=false;
+  if(sid==='pre'){parts.push(dur(F[0].depT-end)+' bis zum Abflug in Zürich');}
+  else if(sid==='post'){
+    if(t>=F[6].arrT)parts.push(dur(t-F[6].arrT)+' nach der Landung in Zürich');
+    else{parts.push('Das liegt noch vor der Landung in Zürich');warn=true;}
+  }else{
+    var s=SEGS.filter(function(x){return x.id===sid;})[0];
+    if(t>=s.inFl.arrT)parts.push(dur(t-s.inFl.arrT)+' nach der Landung in '+s.city);
+    else{parts.push('Achtung: '+dur(s.inFl.arrT-t)+' vor der Landung in '+s.city);warn=true;}
+    var left=s.outFl.depT-end;
+    if(left<0){parts.push('nach dem Abflug');warn=true;}
+    else{parts.push(dur(left)+' bis zum Abflug nach '+APC[s.outFl.to]);if(left<3*H&&s.outFl.d===d.date)warn=true;}
+  }
+  return {t:parts.join(' · '),w:warn};
+}
+function updatePreview(){var p=preview(readForm()),el=$('#pv');el.textContent=p.t;el.className='pv'+(p.w?' warn':'');}
+function updateIdeas(){
+  var c=$('#fCity').value;$('#ideaCity').textContent=CITY[c].n;
+  $('#ideas').innerHTML=(IDEAS[c]||[]).map(function(x){return '<button type="button" class="idea" data-act="idea" data-v="'+esc(x)+'">'+esc(x)+'</button>';}).join('');
+}
+function resetForm(keepDate){
+  var d=keepDate||$('#fDate').value||FIRST;
+  editingId=null;cityTouched=false;
+  $('#form').reset();$('#fDate').value=d;$('#fCity').value=defaultCity(d);
+  document.querySelector('input[name="ftype"][value="act"]').checked=true;
+  $('#formTitle').textContent='Neuer Eintrag';$('#fSave').textContent='Speichern';$('#fCancel').hidden=true;$('#formMsg').textContent='';
+  updatePreview();updateIdeas();
+}
+function startEdit(id){
+  var it=state.items.filter(function(i){return i.id===id;})[0];if(!it)return;
+  editingId=id;cityTouched=true;
+  $('#fTitle').value=it.title;$('#fDate').value=it.date;$('#fCity').value=it.city;$('#fStart').value=it.start||'';$('#fEnd').value=it.end||'';
+  $('#fPlace').value=it.place||'';$('#fCost').value=it.cost?String(it.cost):'';$('#fNote').value=it.note||'';
+  var r=document.querySelector('input[name="ftype"][value="'+(it.type||'act')+'"]');if(r)r.checked=true;
+  $('#formTitle').textContent='Eintrag bearbeiten';$('#fSave').textContent='Änderungen speichern';$('#fCancel').hidden=false;$('#formMsg').textContent='';
+  updatePreview();updateIdeas();go('add');window.scrollTo(0,0);
+}
+var confirmDel=null;
+function renderAddList(){
+  var list=state.items.slice().sort(function(a,b){var x=itStart(a)!=null?itStart(a):inst(a.date,'00:05',itTz(a)),y=itStart(b)!=null?itStart(b):inst(b.date,'00:05',itTz(b));return x-y;});
+  if(!list.length){$('#addList').innerHTML='<div class="empty">Noch nichts hinzugefügt. Wähle oben eine Idee oder schreib deinen eigenen Eintrag.</div>';return;}
+  $('#addList').innerHTML=list.map(function(it){
+    var T=TYPES[it.type]||TYPES.act,c=CITY[it.city].c,meta=[dLabel(it.date),timeText(it),CITY[it.city].n];
+    if(it.cost)meta.push(chf(it.cost));
+    var del=confirmDel===it.id?'<button class="btn danger" type="button" data-act="delyes" data-id="'+esc(it.id)+'" style="min-height:36px;padding:6px 12px;font-size:14px">Löschen</button>':'<button class="go mini" type="button" data-act="del" data-id="'+esc(it.id)+'" aria-label="Eintrag löschen">'+ico('trash',16)+'</button>';
+    return '<div class="item" style="--c:'+c+';--cbg:'+c+'1F"><span class="ib">'+ico(T.i,18)+'</span><div class="rb"><div class="rt">'+esc(it.title)+'</div><div class="rm">'+meta.map(esc).join(' · ')+'</div>'+(it.place?'<div class="rm">'+esc(it.place)+'</div>':'')+(it.note?'<div class="rm">'+esc(it.note)+'</div>':'')+'</div><div class="acts"><button class="mini" type="button" data-act="edit" data-id="'+esc(it.id)+'" aria-label="Eintrag bearbeiten">'+ico('edit',16)+'</button>'+del+'</div></div>';
+  }).join('');
+}
+function submitForm(e){
+  e.preventDefault();
+  var d=readForm(),m=$('#formMsg');
+  if(!d.title){m.textContent='Bitte einen Titel eingeben.';$('#fTitle').focus();return;}
+  if(d.end&&!d.start){m.textContent='Für eine Endzeit brauchst du auch eine Startzeit.';return;}
+  if(d.start&&d.end&&d.end<d.start){m.textContent='Das Ende liegt vor dem Beginn.';return;}
+  m.textContent='';
+  if(editingId){
+    state.items=state.items.map(function(i){return i.id===editingId?Object.assign({},d,{id:editingId}):i;});
+    toast('Änderungen gespeichert');
+  }else{
+    state.items.push(Object.assign({},d,{id:uid()}));
+    toast('Gespeichert. Siehe Timeline');
+  }
+  var keep=d.date;save();resetForm(keep);
+}
+
+/* ---------- Übersicht ---------- */
+function renderOverview(){
+  var rows=[],sum=0;
+  Object.keys(STAYS).forEach(function(k){var s=STAYS[k];rows.push(['Hotel · '+s.name,s.price]);sum+=s.price;});
+  F.forEach(function(f){if(f.price){rows.push(['Flug · '+APC[f.from]+' → '+APC[f.to],f.price]);sum+=f.price;}});
+  var own=state.items.reduce(function(a,i){return a+(i.cost||0);},0);
+  var h='<div class="big">'+chf(sum)+'</div><div class="sub" style="color:var(--ink2);margin:4px 0 12px">gebucht, ohne die Qatar-Flüge (im Beleg steht kein Preis)</div>';
+  h+=rows.map(function(r){return '<div class="kv"><span>'+esc(r[0])+'</span><b>'+chf(r[1])+'</b></div>';}).join('');
+  h+='<div class="kv"><span>Eigene Einträge</span><b>'+chf(own)+'</b></div>';
+  h+='<div class="kv"><span><b style="color:var(--ink)">Total inklusive eigener Einträge</b></span><b>'+chf(sum+own)+'</b></div>';
+  $('#ovCosts').innerHTML=h;
+  var tz=[['Zürich','#5B6B82','Referenz (UTC+1)'],['Doha','#5B6B82','+2 Std'],['Malaysia','#6B4DFF','+7 Std'],['Thailand','#F29A0B','+6 Std']];
+  $('#ovTz').innerHTML=tz.map(function(z){return '<div class="tzrow" style="--c:'+z[1]+'"><i></i><span>'+z[0]+'</span><b>'+z[2]+'</b></div>';}).join('');
+  var tOpen=TASKS.filter(function(t){return !isDone(t.id);}).sort(byDue),tDone=TASKS.filter(isDone).sort(byDue);
+  var cust=state.todos.map(function(t){
+    return '<div class="todo'+(t.done?' done':'')+'"><button class="cb" type="button" data-act="todo" data-id="'+esc(t.id)+'" role="checkbox" aria-checked="'+(t.done?'true':'false')+'" aria-label="'+esc(t.t)+'">'+(t.done?ico('check',16):'')+'</button><button class="tx" type="button" data-act="todo" data-id="'+esc(t.id)+'">'+esc(t.t)+(t.n?'<small>'+esc(t.n)+'</small>':'')+'</button><button class="go mini" type="button" data-act="todel" data-id="'+esc(t.id)+'" aria-label="Punkt entfernen">'+ico('x',15)+'</button></div>';
+  }).join('');
+  $('#ovTodos').innerHTML=(tOpen.length?tOpen.map(function(t){return taskRow(t);}).join(''):'<div class="empty">Alles erledigt.</div>')+(cust?'<div class="nx">Eigene Punkte</div>'+cust:'')+(tDone.length?'<div class="nx">Erledigt</div>'+tDone.map(function(t){return taskRow(t,true);}).join(''):'');
+  $('#exp').value=JSON.stringify({app:'reiseplan-malaysia-thailand-2026',exportiert:new Date().toISOString(),items:state.items,todos:state.todos,done:state.done,updated:state.updated},null,2);
+  $('#syncInfo').textContent=syncText();
+}
+
+/* ---------- Navigation, Toast, Events ---------- */
+var tab='timeline';
+function go(t){if(location.hash!=='#'+t){try{location.hash=t;}catch(e){}}show(t);}
+function show(t){
+  if(['timeline','add','overview'].indexOf(t)<0)t='timeline';
+  tab=t;
+  ['timeline','add','overview'].forEach(function(n){var v=$('#v-'+n),b=$('#tab-'+n);v.hidden=n!==t;if(n===t)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+}
+var toastT=null;
+function toast(m){var el=$('#toast');el.textContent=m;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){el.hidden=true;},2600);}
+function renderAll(){renderTimeline();renderAddList();renderOverview();}
+
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest('[data-act],[data-tab]');if(!b)return;
+  if(b.dataset.tab){go(b.dataset.tab);window.scrollTo(0,0);return;}
+  var a=b.dataset.act,id=b.dataset.id;
+  if(a==='addday'){resetForm(b.dataset.date);$('#fCity').value=b.dataset.city&&CITY[b.dataset.city]?b.dataset.city:defaultCity(b.dataset.date);updatePreview();updateIdeas();go('add');window.scrollTo(0,0);setTimeout(function(){$('#fTitle').focus();},50);}
+  else if(a==='edit')startEdit(id);
+  else if(a==='idea'){$('#fTitle').value=b.dataset.v;$('#fTitle').focus();}
+  else if(a==='del'){confirmDel=id;renderAddList();}
+  else if(a==='delyes'){state.items=state.items.filter(function(i){return i.id!==id;});confirmDel=null;if(editingId===id)resetForm();save();toast('Eintrag gelöscht');}
+  else if(a==='task'){if(state.done[id])delete state.done[id];else state.done[id]=true;save();}
+  else if(a==='todo'){state.todos=state.todos.map(function(t){return t.id===id?Object.assign({},t,{done:!t.done}):t;});save();}
+  else if(a==='todel'){state.todos=state.todos.filter(function(t){return t.id!==id;});save();}
+});
+$('#form').addEventListener('submit',submitForm);
+$('#fCancel').addEventListener('click',function(){resetForm();});
+['fDate','fStart','fEnd'].forEach(function(i){$('#'+i).addEventListener('input',updatePreview);});
+$('#fDate').addEventListener('change',function(){if(!cityTouched)$('#fCity').value=defaultCity($('#fDate').value);updatePreview();updateIdeas();});
+$('#fCity').addEventListener('change',function(){cityTouched=true;updatePreview();updateIdeas();});
+$('#todoForm').addEventListener('submit',function(e){e.preventDefault();var v=$('#todoIn').value.trim();if(!v)return;state.todos.push({id:uid(),t:v,n:'',done:false});$('#todoIn').value='';save();});
+$('#expCopy').addEventListener('click',function(){
+  var ta=$('#exp');ta.focus();ta.select();var ok=false;
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(function(){toast('Export kopiert');},function(){toast('Text markiert. Bitte manuell kopieren');});ok=true;}}catch(e){}
+  if(!ok){try{ok=document.execCommand('copy');}catch(e){}toast(ok?'Export kopiert':'Text markiert. Bitte manuell kopieren');}
+});
+$('#impGo').addEventListener('click',function(){
+  var m=$('#impMsg');
+  try{
+    var o=JSON.parse($('#imp').value);
+    if(!o||typeof o!=='object'||(!Array.isArray(o.items)&&!Array.isArray(o.todos)))throw new Error('x');
+    var n=normalize(o);if(!Array.isArray(o.todos))n.todos=state.todos;if(!o.done)n.done=state.done;
+    state=n;m.textContent='';$('#imp').value='';save();toast('Import geladen');
+  }catch(e){m.textContent='Das ist kein gültiger Export. Bitte den kompletten Text einfügen.';}
+});
+var resetArmed=false;
+$('#resetBtn').addEventListener('click',function(){
+  var b=$('#resetBtn');
+  if(!resetArmed){resetArmed=true;b.textContent='Wirklich alle eigenen Einträge löschen?';b.className='btn danger';setTimeout(function(){resetArmed=false;b.textContent='Eigene Einträge zurücksetzen';b.className='btn ghost';},5000);return;}
+  resetArmed=false;b.textContent='Eigene Einträge zurücksetzen';b.className='btn ghost';state.items=[];save();toast('Zurückgesetzt');
+});
+window.addEventListener('hashchange',function(){show(location.hash.replace('#',''));});
+
+/* ---------- Start ---------- */
+$('#tab-timeline').innerHTML=ico('list',20)+'<span>Timeline</span>';
+$('#tab-add').innerHTML=ico('plus',20)+'<span>Hinzufügen</span>';
+$('#tab-overview').innerHTML=ico('grid',20)+'<span>Übersicht</span>';
+$('#banAdd').innerHTML=ART.add;$('#banOv').innerHTML=ART.ov;
+fillSelects();resetForm(FIRST);renderAll();
+show(location.hash.replace('#','')||'timeline');
+initDb();
+
+/* ---------- Live-Abruf direkt aus dem Browser (nur wenn erlaubt, z. B. GitHub Pages) ---------- */
+var WXP=[['kl',3.14,101.69],['lgk',6.35,99.80],['hkt',7.88,98.30],['bkk',13.76,100.50]];
+var WXC={0:'Klar',1:'Überwiegend klar',2:'Teils bewölkt',3:'Bewölkt',45:'Nebel',48:'Nebel',51:'Leichter Nieselregen',53:'Nieselregen',55:'Starker Nieselregen',61:'Leichter Regen',63:'Regen',65:'Starker Regen',80:'Regenschauer',81:'Starke Schauer',82:'Heftige Schauer',95:'Gewitter',96:'Gewitter mit Hagel',99:'Gewitter mit Hagel'};
+var LS_KEY='reiseplan-live-cache',LS_FK='reiseplan-flightkey';
+var liveNet={updated:0,weather:{},flights:{}};
+function mergeLive(){
+  var base=LIVE&&typeof LIVE==='object'?LIVE:{};
+  var w={},fl={},k;
+  for(k in (base.weather||{}))w[k]=base.weather[k];
+  for(k in liveNet.weather)w[k]=liveNet.weather[k];
+  for(k in (base.flights||{}))fl[k]=base.flights[k];
+  for(k in liveNet.flights)fl[k]=liveNet.flights[k];
+  return {updated:Math.max(Number(base.updated)||0,liveNet.updated||0),weather:w,flights:fl};
+}
+function applyNet(){var m=mergeLive();if(m.updated||Object.keys(m.weather).length||Object.keys(m.flights).length){LIVE=m;renderAll();}}
+function setLiveInfo(t){var el=$('#liveInfo');if(el)el.textContent=t;}
+function loadWx(){
+  if(typeof fetch!=='function')return Promise.resolve();
+  var days=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  return Promise.all(WXP.map(function(p){
+    var u='https://api.open-meteo.com/v1/forecast?latitude='+p[1]+'&longitude='+p[2]+'&current=temperature_2m,relative_humidity_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=3';
+    return fetch(u).then(function(r){if(!r.ok)throw new Error('http');return r.json();}).then(function(j){
+      var c=j.current,d=j.daily;if(!c||!d)throw new Error('data');
+      liveNet.weather[p[0]]={t:Math.round(c.temperature_2m),txt:WXC[c.weather_code]||'Wetter',rain:d.precipitation_probability_max[0],hum:Math.round(c.relative_humidity_2m),
+        days:d.time.map(function(t,i){return {d:days[new Date(t+'T12:00:00').getDay()],hi:Math.round(d.temperature_2m_max[i]),lo:Math.round(d.temperature_2m_min[i]),rain:d.precipitation_probability_max[i]};})};
+      return true;
+    }).catch(function(){return false;});
+  })).then(function(r){
+    var ok=r.filter(Boolean).length;
+    if(ok){liveNet.updated=Date.now();try{localStorage.setItem(LS_KEY,JSON.stringify(liveNet));}catch(e){}applyNet();setLiveInfo('Wetter aktualisiert '+ago(liveNet.updated)+'.');}
+    else setLiveInfo('Wetter konnte nicht abgerufen werden. Hier ist das Abrufen evtl. gesperrt oder du bist offline.');
+  });
+}
+var FLN=[['QR96','QR96','2026-11-13'],['QR4991','QR4991','2026-11-14'],['QR837','QR837','2026-11-27'],['QR95','QR95','2026-11-27']];
+function loadFlights(){
+  var key='';try{key=localStorage.getItem(LS_FK)||'';}catch(e){}
+  if(!key||typeof fetch!=='function')return Promise.resolve();
+  var today=zrhDate(Date.now()),near=FLN.filter(function(f){return f[2]>=addDays(today,-1)&&f[2]<=addDays(today,2);});
+  if(!near.length){var el=$('#fkeyInfo');if(el)el.textContent='Kein Flug in den nächsten 2 Tagen. Die Abfrage startet automatisch kurz vor Abflug.';return Promise.resolve();}
+  return Promise.all(near.map(function(f){
+    return fetch('https://aerodatabox.p.rapidapi.com/flights/number/'+f[0]+'/'+f[2],{headers:{'X-RapidAPI-Key':key,'X-RapidAPI-Host':'aerodatabox.p.rapidapi.com'}}).then(function(r){if(!r.ok)throw new Error('http '+r.status);return r.json();}).then(function(arr){
+      var a=Array.isArray(arr)?arr[0]:null;if(!a)return;
+      var st=String(a.status||''),dep=a.departure||{},sch=dep.scheduledTime&&dep.scheduledTime.utc,rev=(dep.revisedTime&&dep.revisedTime.utc)||(dep.predictedTime&&dep.predictedTime.utc);
+      var min=sch&&rev?Math.round((Date.parse(rev.replace(' ','T').replace(/Z?$/,'Z'))-Date.parse(sch.replace(' ','T').replace(/Z?$/,'Z')))/6e4):0;
+      var o={s:/cancel/i.test(st)?'cancel':min>=10?'delay':min<=-10?'early':'ok',min:Math.abs(min)};
+      if(dep.gate)o.gate=dep.gate;
+      if(dep.revisedTime&&dep.revisedTime.local&&min)o.new=dep.revisedTime.local.slice(11,16);
+      if(st)o.note='Status: '+st;
+      liveNet.flights[f[1]]=o;
+    }).catch(function(){});
+  })).then(function(){liveNet.updated=Date.now();applyNet();var el=$('#fkeyInfo');if(el)el.textContent='Flugstatus geprüft '+ago(liveNet.updated)+'.';});
+}
+function liveAll(){return loadWx().then(loadFlights);}
+try{var lc=JSON.parse(localStorage.getItem(LS_KEY)||'null');if(lc&&lc.weather){liveNet=lc;liveNet.flights=lc.flights||{};}}catch(e){}
+document.addEventListener('click',function(e){
+  var t=e.target;if(!t||!t.id)return;
+  if(t.id==='liveNow'){setLiveInfo('Wird abgerufen ...');liveAll();}
+  if(t.id==='fkeySave'){var v=($('#fkey').value||'').trim();try{if(v)localStorage.setItem(LS_FK,v);}catch(er){}$('#fkey').value='';$('#fkeyInfo').textContent=v?'Schlüssel gespeichert. Prüfe Flüge ...':'Kein Schlüssel eingegeben.';if(v)loadFlights();}
+});
+setTimeout(function(){applyNet();liveAll();},600);
+setInterval(liveAll,600000);
+})();
+</script>
+</body>
+</html>
